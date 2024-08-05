@@ -1,14 +1,21 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './navbar/navbar.component';
 import { CatalogComponent } from "./features/catalog/catalog.component";
-import { CarouselComponent } from "./carousel/carousel.component";
-import { CategoryComponent } from "./category/category.component";
+import { ClientNavbarComponent } from './client/client-navbar/client-navbar.component';
+import { ClientFooterComponent } from './client/client-footer/client-footer.component';
+import { ClientCarouselComponent } from './client/client-carousel/client-carousel.component';
+import { ClientCategoryCardComponent } from './client/client-category-card/client-category-card.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, CatalogComponent, CarouselComponent, CategoryComponent],
+  imports: [
+    RouterOutlet, 
+    ClientNavbarComponent,
+    ClientFooterComponent, 
+    CatalogComponent, 
+    ClientCarouselComponent, 
+    ClientCategoryCardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -1,0 +1,18 @@
+.footer {
+    background-color:mediumpurple;
+    padding: 20px 0;
+}
+.footer a {
+    color:aliceblue;
+}
+.footer a:hover {
+    color: #0056b3;
+    text-decoration: none;
+}
+.footer p {
+    color:azure;
+}
+
+.footer h5 {
+    color:crimson;
+}

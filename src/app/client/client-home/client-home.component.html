@@ -23,13 +23,17 @@
             <a class="nav-link" href="#">Kampanyalı Ürünler</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">İletişim</a>
+            <a class="nav-link" routerLink="carousel" routerLinkActive="active">İletişim</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="admin" routerLinkActive="active">Admin</a>
           </li>
         </ul>
         <form class="d-flex">
-          <button class="btn btn-outline-success" routerLink="/login">User</button>
+          <button class="btn btn-outline-success">User</button>
         </form>
       </div>
     </div>
   </nav>
 
+<router-outlet></router-outlet>

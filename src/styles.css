@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+#sidebar {
+    height: 100vh; /* Yüksekliği tam ekran yap */
+    position: fixed; /* Sabit konumda */
+    top: 0; /* Üstten sıfır */
+    left: 0; /* Soldan sıfır */
+    width: 250px; /* Sidebar genişliği */
+    background-color: #f8f9fa; /* Arka plan rengi */
+    transition: all 0.3s; /* Geçiş efekti */
+}
+#sidebar .nav-link {
+    font-weight: 500; /* Yazı kalınlığı */
+}
+#sidebar .nav-link.active {
+    background-color: #007bff; /* Aktif arka plan rengi */
+    color: white; /* Aktif yazı rengi */
+}
+#content {
+    margin-left: 250px; /* İçeriğin sol kenarını sidebar genişliğinde kaydır */
+    transition: margin-left 0.3s; /* Geçiş efekti */
+}
+#sidebar.collapsed {
+    margin-left: -250px; /* Sidebar'ı kaydır */
+}
+#content.collapsed {
+    margin-left: 0; /* İçeriği geri kaydır */
+}
+#sidebar-toggle {
+    position: absolute; /* Sidebar içinde konumlandır */
+    top: 10px; /* Üstten mesafe */
+    right: -50px; /* Sağdan mesafe */
+    cursor: pointer; /* İmleç işareti */
+}

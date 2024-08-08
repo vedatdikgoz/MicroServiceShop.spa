@@ -1,1 +1,64 @@
-<p>product-update works!</p>
+<div class="container mt-5">
+    <h2>Ürün Güncelle</h2>
+    <form [formGroup]="productUpdateForm" (ngSubmit)="onSubmit()">
+      <input type="hidden" class="form-control" for="id" formControlName="id">
+      <div class="form-group">       
+        <label for="name">Ürün Adı</label>
+        <input 
+          type="text" 
+          id="name" 
+          class="form-control" 
+          formControlName="name" 
+          placeholder="Ürün adı" 
+          required
+        >
+      </div>
+  
+      <div class="form-group">
+        <label for="price">Fiyat</label>
+        <input 
+          type="number" 
+          id="price" 
+          class="form-control" 
+          formControlName="price" 
+          placeholder="Fiyat" 
+          required
+        >
+      </div>
+  
+      <div class="form-group">
+        <label for="image">Resim URL'si</label>
+        <input 
+          type="text" 
+          id="image" 
+          class="form-control" 
+          formControlName="image" 
+          placeholder="Resim URL'si"
+        >
+      </div>
+  
+      <div class="form-group">
+        <label for="description">Açıklama</label>
+        <textarea 
+          id="description" 
+          class="form-control" 
+          formControlName="description" 
+          placeholder="Açıklama"
+        ></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="categoryId">Kategori ID</label>
+        <input 
+          type="number" 
+          id="categoryId" 
+          class="form-control" 
+          formControlName="categoryId" 
+          placeholder="Kategori ID" 
+          required
+        >
+      </div>
+      <button type="submit" class="btn btn-primary">Güncelle</button>
+    </form>
+  </div>
+  

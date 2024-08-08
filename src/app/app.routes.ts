@@ -3,18 +3,28 @@ import { ClientHomeComponent } from './client/client-home/client-home.component'
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { CategoryListComponent } from './admin/admin-category/category-list/category-list.component';
 import { ClientCarouselComponent } from './client/client-carousel/client-carousel.component';
+import { CatalogComponent } from './features/catalog/catalog.component';
+import { CategoryAddComponent } from './admin/admin-category/category-add/category-add.component';
+import { ProductListComponent } from './admin/admin-product/product-list/product-list.component';
+import { ProductAddComponent } from './admin/admin-product/product-add/product-add.component';
+import { ProductUpdateComponent } from './admin/admin-product/product-update/product-update.component';
 
 
 export const routes: Routes = [
     { path: '', component: ClientHomeComponent,
         children: [
-            { path: 'carousel', component: ClientCarouselComponent }
+            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: 'home', component: CatalogComponent },
           ]
      },
     {
       path: 'admin',component: AdminHomeComponent,
       children: [
-        { path: 'category', component: CategoryListComponent }
+        { path: 'category-list', component: CategoryListComponent },
+        { path: 'category-add', component: CategoryAddComponent },
+        { path: 'product-list', component: ProductListComponent },
+        { path:'product-add', component: ProductAddComponent },
+        { path:"product-list/products/:id", component:ProductUpdateComponent },
       ]
     }
 ];

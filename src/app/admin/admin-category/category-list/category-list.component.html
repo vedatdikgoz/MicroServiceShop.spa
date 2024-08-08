@@ -1,1 +1,16 @@
-<p>category-list works!</p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4" *ngFor="let c of categories">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ c.name }}</h5>
+                    <div class="btn-group">
+                        <button class="btn btn-success btn-sm">Ürünler</button>
+                        <button class="btn btn-warning btn-sm">Güncelle</button>
+                        <button class="btn btn-danger btn-sm">Sil</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

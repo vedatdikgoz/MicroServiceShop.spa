@@ -1,1 +1,28 @@
-<p>product-list works!</p>
+<div class="container mt-5">
+    <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Ürün Adı</th>
+                <th>Fiyat</th>
+                <th>Resim</th>
+                <th>Açıklama</th>
+                <th>Düzenle</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Ürün 1 -->
+            <tr *ngFor="let p of products">
+                <td>{{ p.name }}</td>
+                <td>{{ p.price}}</td>
+                <td><img [src]="p.image" style="width: 100px; height: auto;"></td>
+                <td>{{ p.description }}</td>
+                <td><a class="btn btn-warning btn-sm" [routerLink]="'products/' + p.id" routerLinkActive="active">Düzenle</a></td>
+                <td><button class="btn btn-danger btn-sm" (click)="deleteProduct(p.id)">Sil</button></td>
+            </tr> 
+        </tbody>
+    </table>
+</div>

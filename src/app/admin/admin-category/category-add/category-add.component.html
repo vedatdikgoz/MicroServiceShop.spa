@@ -1,1 +1,14 @@
-<p>category-add works!</p>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <form [formGroup]="categoryAddForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <input type="text" id="name" class="form-control" formControlName="name" placeholder="Kategori adı"
+                    autofocus>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-sm btn-primary btn-block">Ekle</button>
+        </form>
+    </div>
+</div>

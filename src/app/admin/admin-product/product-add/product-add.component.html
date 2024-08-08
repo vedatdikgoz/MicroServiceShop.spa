@@ -1,1 +1,62 @@
-<p>product-add works!</p>
+<div class="container mt-5">
+    <h2>Ürün Ekle</h2>
+    <form [formGroup]="productAddForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Ürün Adı</label>
+            <input 
+                type="text" 
+                id="name" 
+                class="form-control" 
+                formControlName="name" 
+                placeholder="Ürün adı" 
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="price">Fiyat</label>
+            <input 
+                type="number" 
+                id="price" 
+                class="form-control" 
+                formControlName="price" 
+                placeholder="Fiyat" 
+                step="0.01"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="image">Resim URL</label>
+            <input 
+                type="text" 
+                id="image" 
+                class="form-control" 
+                formControlName="image" 
+                placeholder="Resim URL'si"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="description">Açıklama</label>
+            <textarea 
+                id="description" 
+                class="form-control" 
+                formControlName="description" 
+                placeholder="Açıklama" 
+                rows="3"
+            ></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="categoryId">Kategori</label>
+            <select id="categoryId" class="form-control" formControlName="categoryId" required>
+                <option value="" disabled>Bir kategori seçin</option>
+                <option *ngFor="let category of categories" [value]="category.id">
+                    {{ category.name }}
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Ekle</button>
+    </form>
+</div>

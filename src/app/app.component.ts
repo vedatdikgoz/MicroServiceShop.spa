@@ -6,6 +6,7 @@ import { ClientCarouselComponent } from './client/client-carousel/client-carouse
 import { ClientCategoryCardComponent } from './client/client-category-card/client-category-card.component';
 import { ClientShoppingCartComponent } from './client/client-shopping-cart/client-shopping-cart.component';
 import { LoginComponent } from './auth/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',

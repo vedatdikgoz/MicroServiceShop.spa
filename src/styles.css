@@ -31,3 +31,19 @@
     right: -50px; /* Sağdan mesafe */
     cursor: pointer; /* İmleç işareti */
 }
+
+.card {
+    margin-bottom: 1rem; /* Kartlar arasındaki boşluk */
+}
+.btn-group {
+    display: flex;
+    gap: 0.5rem; /* Butonlar arasındaki boşluk */
+}
+.btn-group .btn {
+    margin: 0; /* Butonların etrafında ekstra boşluk bırakmaz */
+}
+.card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

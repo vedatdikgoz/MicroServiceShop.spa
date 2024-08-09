@@ -9,6 +9,7 @@
                 <th>Fiyat</th>
                 <th>Resim</th>
                 <th>Açıklama</th>
+                <th>Kategori</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
             </tr>
@@ -20,6 +21,7 @@
                 <td>{{ p.price}}</td>
                 <td><img [src]="p.image" style="width: 100px; height: auto;"></td>
                 <td>{{ p.description }}</td>
+                <td>{{p.categoryName}}</td>
                 <td><a class="btn btn-warning btn-sm" [routerLink]="'products/' + p.id" routerLinkActive="active">Düzenle</a></td>
                 <td><button class="btn btn-danger btn-sm" (click)="deleteProduct(p.id)">Sil</button></td>
             </tr> 

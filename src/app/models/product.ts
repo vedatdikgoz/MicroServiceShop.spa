@@ -5,5 +5,6 @@ export class Product{
     price?:number
     image?:string
     description?:string
-    categoryId!:number
+    categoryId!:string
+    categoryName!:string
 }

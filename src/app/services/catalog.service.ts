@@ -26,6 +26,11 @@ export class CatalogService {
     return this.httpClient.get<Product>(this.path + "products/?id=" + productId)
   }
 
+  getProductsWithCategory(categoryId:string): Observable<Product[]> {
+    return this.httpClient.get<{data: Product[]}>(this.path + "Products/productwithcategory?categoryId=" + categoryId)
+    .pipe(map(response => response.data));
+  }
+
   addCategory(category: Category): Observable<Category> {
     return this.httpClient.post<Category>(this.path + 'categories', category, {
       headers: new HttpHeaders({

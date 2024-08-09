@@ -6,7 +6,7 @@ import { ClientCarouselComponent } from './client/client-carousel/client-carouse
 import { ClientCategoryCardComponent } from './client/client-category-card/client-category-card.component';
 import { ClientShoppingCartComponent } from './client/client-shopping-cart/client-shopping-cart.component';
 import { LoginComponent } from './auth/login/login.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ClientCategoryProductComponent } from './client/client-category-product/client-category-product.component';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ClientCarouselComponent,
     ClientCategoryCardComponent,
     ClientShoppingCartComponent,
+    ClientCategoryProductComponent,
     LoginComponent
 ],
   templateUrl: './app.component.html',

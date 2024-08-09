@@ -8,6 +8,8 @@ import { CategoryAddComponent } from './admin/admin-category/category-add/catego
 import { ProductListComponent } from './admin/admin-product/product-list/product-list.component';
 import { ProductAddComponent } from './admin/admin-product/product-add/product-add.component';
 import { ProductUpdateComponent } from './admin/admin-product/product-update/product-update.component';
+import { ClientCategoryProductComponent } from './client/client-category-product/client-category-product.component';
+import { ClientProductDetailComponent } from './client/client-product-detail/client-product-detail.component';
 
 
 export const routes: Routes = [
@@ -15,6 +17,8 @@ export const routes: Routes = [
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: CatalogComponent },
+            { path:'home/category-product/:id', component:ClientCategoryProductComponent },
+            { path:'home/product-detail', component:ClientProductDetailComponent }
           ]
      },
     {

@@ -60,7 +60,8 @@ export class CategoryAddComponent implements OnInit {
 
   initializeForm(): void {
     this.categoryAddForm = this.fb.group({
-      name: ['', Validators.required] 
+      name: ['', Validators.required],
+      imageUrl: [''] 
     });
   }
 

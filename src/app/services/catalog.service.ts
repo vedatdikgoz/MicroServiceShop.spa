@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Category } from '../models/category';
 import { map, Observable } from 'rxjs';
 import { Product } from '../models/product';
+import { ProductImage } from '../models/productImage';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,11 @@ export class CatalogService {
   getProductsWithCategory(categoryId:string): Observable<Product[]> {
     return this.httpClient.get<{data: Product[]}>(this.path + "Products/productwithcategory?categoryId=" + categoryId)
     .pipe(map(response => response.data));
+  }
+
+  getProductImages(productId:string): Observable<ProductImage[]>{
+    return this.httpClient.get<{data: ProductImage[]}>(this.path + "ProductImages/getall/" + productId)
+    .pipe(map(response => response.data))
   }
 
   addCategory(category: Category): Observable<Category> {

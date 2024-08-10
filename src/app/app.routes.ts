@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { ClientHomeComponent } from './client/client-home/client-home.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { CategoryListComponent } from './admin/admin-category/category-list/category-list.component';
-import { ClientCarouselComponent } from './client/client-carousel/client-carousel.component';
 import { CatalogComponent } from './features/catalog/catalog.component';
 import { CategoryAddComponent } from './admin/admin-category/category-add/category-add.component';
 import { ProductListComponent } from './admin/admin-product/product-list/product-list.component';
@@ -18,7 +17,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: CatalogComponent },
             { path:'home/category-product/:id', component:ClientCategoryProductComponent },
-            { path:'home/product-detail', component:ClientProductDetailComponent }
+            { path:'home/product-detail/:id', component:ClientProductDetailComponent }
           ]
      },
     {
@@ -28,7 +27,7 @@ export const routes: Routes = [
         { path: 'category-add', component: CategoryAddComponent },
         { path: 'product-list', component: ProductListComponent },
         { path:'product-add', component: ProductAddComponent },
-        { path:"product-list/products/:id", component:ProductUpdateComponent },
+        { path:"product-list/products/:id", component:ProductUpdateComponent }
       ]
     }
 ];

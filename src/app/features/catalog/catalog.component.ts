@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ClientCarouselComponent } from "../../client/client-carousel/client-carousel.component";
 import { ClientCategoryCardComponent } from "../../client/client-category-card/client-category-card.component";
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Product } from '../../models/product';
+import { CatalogService } from '../../services/catalog.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'catalog',
@@ -11,6 +14,33 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css'
 })
-export class CatalogComponent {
-  
+export class CatalogComponent implements OnInit {
+  products: Product[] = [];
+  errorMessage: string = ''; 
+
+  constructor(
+    private catalogService: CatalogService, 
+    private router: Router) {}
+
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+
+
+
+  loadProducts(): void {
+    this.catalogService.getProducts().pipe(
+      catchError((error) => {
+        console.error('Ürünler yüklenirken bir hata oluştu:', error);
+        this.errorMessage = 'Ürünler yüklenirken bir hata oluştu. Lütfen tekrar deneyin.';
+        return of([]);
+      })
+    ).subscribe((products: Product[]) => {
+      this.products = products;
+    });
+  }
 }
+
+
+
+

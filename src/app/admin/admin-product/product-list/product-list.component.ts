@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../../models/product';
 import { CatalogService } from '../../../services/catalog.service';
 import { catchError, of } from 'rxjs';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ProductImage } from '../../../models/productImage';
 
 @Component({
   selector: 'product-list',
@@ -14,7 +15,9 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/r
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
+  productImages: ProductImage[] = [];
   errorMessage: string = ''; 
+  productId!: string;
 
   constructor(
     private catalogService: CatalogService, 
@@ -37,6 +40,19 @@ export class ProductListComponent implements OnInit {
   }
 
 
+  loadProductImages(productId:string): void {
+    this.catalogService.getProductImages(productId).pipe(
+      catchError((error) => {
+        console.error('Ürün resimleri yüklenirken bir hata oluştu:', error);
+        this.errorMessage = 'Ürün resimleri yüklenirken bir hata oluştu. Lütfen tekrar deneyin.';
+        return of([]);
+      })
+    ).subscribe((productImages: ProductImage[]) => {
+      this.productImages = productImages;
+      console.log(productImages);
+    });
+  }
+
 
   deleteProduct(id:string): void {
     if (id) {
@@ -55,4 +71,25 @@ export class ProductListComponent implements OnInit {
       });
     }
   }
+
+
+
+  openModel(productId: string) {
+    this.productId = productId;
+    if (productId) {
+      this.loadProductImages(productId);
+    }
+    const modalDiv = document.getElementById('myModal');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'block';
+    }
+  }
+
+  CloseModel() {
+    const modelDiv = document.getElementById('myModal');
+    if(modelDiv!= null) {
+      modelDiv.style.display = 'none';
+    } 
+  }
 }
+

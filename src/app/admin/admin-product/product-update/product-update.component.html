@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <h2>Ürün Güncelle</h2>
     <form [formGroup]="productUpdateForm" (ngSubmit)="onSubmit()">
-      <input type="hidden" class="form-control" for="id" formControlName="id">
+      <input type="hidden" id="id" formControlName="id">
       <div class="form-group">       
         <label for="name">Ürün Adı</label>
         <input 
@@ -27,12 +27,12 @@
       </div>
   
       <div class="form-group">
-        <label for="image">Resim URL'si</label>
+        <label for="imageUrl">Resim URL'si</label>
         <input 
           type="text" 
-          id="image" 
+          id="imageUrl" 
           class="form-control" 
-          formControlName="image" 
+          formControlName="imageUrl" 
           placeholder="Resim URL'si"
         >
       </div>
@@ -48,16 +48,19 @@
       </div>
   
       <div class="form-group">
-        <label for="categoryId">Kategori ID</label>
-        <input 
-          type="number" 
-          id="categoryId" 
-          class="form-control" 
-          formControlName="categoryId" 
-          placeholder="Kategori ID" 
+        <label for="categoryId">Kategori</label>
+        <select
+          id="categoryId"
+          class="form-control"
+          formControlName="categoryId"
           required
         >
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
       </div>
+      <br>
       <button type="submit" class="btn btn-primary">Güncelle</button>
     </form>
   </div>

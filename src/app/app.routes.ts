@@ -9,6 +9,7 @@ import { ProductAddComponent } from './admin/admin-product/product-add/product-a
 import { ProductUpdateComponent } from './admin/admin-product/product-update/product-update.component';
 import { ClientCategoryProductComponent } from './client/client-category-product/client-category-product.component';
 import { ClientProductDetailComponent } from './client/client-product-detail/client-product-detail.component';
+import { ProductDetailUpdateComponent } from './admin/admin-product/product-detail-update/product-detail-update.component';
 
 
 export const routes: Routes = [
@@ -27,7 +28,8 @@ export const routes: Routes = [
         { path: 'category-add', component: CategoryAddComponent },
         { path: 'product-list', component: ProductListComponent },
         { path:'product-add', component: ProductAddComponent },
-        { path:"product-list/products/:id", component:ProductUpdateComponent }
+        { path:"product-list/product-update/:id", component:ProductUpdateComponent },
+        { path:"product-list/product-detail-update/:id", component:ProductDetailUpdateComponent }
       ]
     }
 ];

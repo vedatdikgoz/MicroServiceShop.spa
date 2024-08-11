@@ -4,6 +4,7 @@ import { Category } from '../models/category';
 import { map, Observable } from 'rxjs';
 import { Product } from '../models/product';
 import { ProductImage } from '../models/productImage';
+import { ProductDetail } from '../models/productDetail';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class CatalogService {
   }
 
   getProductById(productId: string): Observable<Product> {
-    return this.httpClient.get<Product>(this.path + "products/?id=" + productId)
+    return this.httpClient.get<Product>(this.path + "products/" + productId)
   }
 
   getProductsWithCategory(categoryId:string): Observable<Product[]> {
@@ -35,6 +36,10 @@ export class CatalogService {
   getProductImages(productId:string): Observable<ProductImage[]>{
     return this.httpClient.get<{data: ProductImage[]}>(this.path + "ProductImages/getall/" + productId)
     .pipe(map(response => response.data))
+  }
+
+  getProductDetail(productId:string): Observable<ProductDetail>{
+    return this.httpClient.get<ProductDetail>(this.path + "ProductDetails/product/" + productId)
   }
 
   addCategory(category: Category): Observable<Category> {
@@ -67,6 +72,16 @@ export class CatalogService {
 
   deleteProduct(id: string): Observable<void> {
     return this.httpClient.delete<void>(this.path + 'Products/' + id,{
+      headers: new HttpHeaders({
+        //"Authorization": `Bearer ${this.authService.token}`,
+        //"Access-Control-Allow-Origin":"*"
+      })
+    });
+  }
+
+
+  updateProductDetail(productDetail: ProductDetail): Observable<ProductDetail> {
+    return this.httpClient.put<ProductDetail>(this.path + 'ProductDetails', productDetail,{
       headers: new HttpHeaders({
         //"Authorization": `Bearer ${this.authService.token}`,
         //"Access-Control-Allow-Origin":"*"

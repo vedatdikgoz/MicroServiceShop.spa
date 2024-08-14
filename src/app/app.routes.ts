@@ -10,6 +10,9 @@ import { ProductUpdateComponent } from './admin/admin-product/product-update/pro
 import { ClientCategoryProductComponent } from './client/client-category-product/client-category-product.component';
 import { ClientProductDetailComponent } from './client/client-product-detail/client-product-detail.component';
 import { ProductDetailUpdateComponent } from './admin/admin-product/product-detail-update/product-detail-update.component';
+import { CommentListComponent } from './admin/admin-comment/comment-list/comment-list.component';
+import { CommentUpdateComponent } from './admin/admin-comment/comment-update/comment-update.component';
+import { AuthComponent } from './auth/auth.component';
 
 
 export const routes: Routes = [
@@ -18,7 +21,8 @@ export const routes: Routes = [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: CatalogComponent },
             { path:'home/category-product/:id', component:ClientCategoryProductComponent },
-            { path:'home/product-detail/:id', component:ClientProductDetailComponent }
+            { path:'home/product-detail/:id', component:ClientProductDetailComponent },
+            { path:'auth', component:AuthComponent }
           ]
      },
     {
@@ -27,9 +31,11 @@ export const routes: Routes = [
         { path: 'category-list', component: CategoryListComponent },
         { path: 'category-add', component: CategoryAddComponent },
         { path: 'product-list', component: ProductListComponent },
-        { path:'product-add', component: ProductAddComponent },
-        { path:"product-list/product-update/:id", component:ProductUpdateComponent },
-        { path:"product-list/product-detail-update/:id", component:ProductDetailUpdateComponent }
+        { path: 'product-add', component: ProductAddComponent },
+        { path: "product-list/product-update/:id", component:ProductUpdateComponent },
+        { path: "product-list/product-detail-update/:id", component:ProductDetailUpdateComponent },
+        { path: 'comment-list', component: CommentListComponent},
+        { path: "comment-list/comment-update/:id", component: CommentUpdateComponent}
       ]
     }
 ];

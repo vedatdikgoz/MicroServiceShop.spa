@@ -5,7 +5,7 @@ import { ClientFooterComponent } from './client/client-footer/client-footer.comp
 import { ClientCarouselComponent } from './client/client-carousel/client-carousel.component';
 import { ClientCategoryCardComponent } from './client/client-category-card/client-category-card.component';
 import { ClientShoppingCartComponent } from './client/client-shopping-cart/client-shopping-cart.component';
-import { LoginComponent } from './auth/login/login.component';
+import { AuthComponent } from './auth/auth.component';
 import { ClientCategoryProductComponent } from './client/client-category-product/client-category-product.component';
 
 @Component({
@@ -21,7 +21,7 @@ import { ClientCategoryProductComponent } from './client/client-category-product
     ClientCategoryCardComponent,
     ClientShoppingCartComponent,
     ClientCategoryProductComponent,
-    LoginComponent
+    AuthComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

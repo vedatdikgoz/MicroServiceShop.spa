@@ -1,0 +1,63 @@
+<div class="container mt-5">
+    <h2>Yorum Düzenle</h2>
+    <form [formGroup]="commentUpdateForm" (ngSubmit)="onSubmit()">
+      <input type="hidden" id="id" formControlName="id">
+      <div class="form-group">       
+        <label for="nameSurname">Kullanıcı Adı</label>
+        <input 
+          type="text" 
+          id="nameSurname" 
+          class="form-control" 
+          formControlName="nameSurname" 
+          placeholder="Kullanıcı adı" 
+          required
+        >
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          class="form-control" 
+          formControlName="email" 
+          placeholder="Email" 
+          required
+        >
+      </div>
+  
+      <div class="form-group">
+        <label for="imageUrl">Resim URL'si</label>
+        <input 
+          type="text" 
+          id="imageUrl" 
+          class="form-control" 
+          formControlName="imageUrl" 
+          placeholder="Resim URL'si"
+        >
+      </div>
+  
+      <div class="form-group">
+        <label for="commentDetail">Yorum</label>
+        <textarea 
+          id="commentDetail" 
+          class="form-control" 
+          formControlName="commentDetail" 
+          placeholder="Yorum"
+        ></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="rating">Puan</label>
+        <input 
+          type="number" 
+          id="rating" 
+          class="form-control" 
+          formControlName="rating" 
+          placeholder="Resim URL'si"
+        >
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary">Güncelle</button>
+    </form>
+  </div>

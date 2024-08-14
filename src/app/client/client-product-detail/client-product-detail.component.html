@@ -86,13 +86,16 @@
     <div class="bg-light p-30">
       <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-          <a class="nav-link active" id="tab-pane-1-tab" data-bs-toggle="tab" href="#tab-pane-1" role="tab" aria-controls="tab-pane-1" aria-selected="true">Ürün Açıklaması</a>
+          <a class="nav-link active" id="tab-pane-1-tab" data-bs-toggle="tab" href="#tab-pane-1" role="tab"
+            aria-controls="tab-pane-1" aria-selected="true">Ürün Açıklaması</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="tab-pane-2-tab" data-bs-toggle="tab" href="#tab-pane-2" role="tab" aria-controls="tab-pane-2" aria-selected="false">Ürün Bilgileri</a>
+          <a class="nav-link" id="tab-pane-2-tab" data-bs-toggle="tab" href="#tab-pane-2" role="tab"
+            aria-controls="tab-pane-2" aria-selected="false">Ürün Bilgileri</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="tab-pane-3-tab" data-bs-toggle="tab" href="#tab-pane-3" role="tab" aria-controls="tab-pane-3" aria-selected="false">Yorumlar (0)</a>
+          <a class="nav-link" id="tab-pane-3-tab" data-bs-toggle="tab" href="#tab-pane-3" role="tab"
+            aria-controls="tab-pane-3" aria-selected="false">Yorumlar ({{ commentCounter }})</a>
         </li>
       </ul>
       <div class="tab-content" id="myTabContent" *ngIf="productDetail">
@@ -121,51 +124,46 @@
         <div class="tab-pane fade" id="tab-pane-3" role="tabpanel" aria-labelledby="tab-pane-3-tab">
           <div class="row">
             <div class="col-md-6">
-              <h4 class="mb-4">1 review for "Product Name"</h4>
-              <div class="media mb-4">
+              <div class="media mb-4" *ngFor="let pc of productComments">
                 <img src="" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
                 <div class="media-body">
-                  <h6>Vedat Dikgöz<small> - <i>01 Jan 2024</i></small></h6>
+                  <h6>{{pc.nameSurname}}<small> - <i>{{pc.createdDate | date:'dd-MM-yyyy'}}</i></small></h6>
                   <div class="text-primary mb-2">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-alt"></i>
-                    <i class="fa fa-star"></i>
+                    <span *ngFor="let star of [].constructor(pc.rating); let i = index">
+                      <i class="fa fa-star"></i>
+                    </span>
                   </div>
-                  <p>Diam amet duo labore stet elitr ea clita ipsum...</p>
+                  <p>{{pc.commentDetail}}</p>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <h4 class="mb-4">Yorum Ekle</h4>
               <small>Email adresiniz yayınlanmayacaktır...</small>
-              <div class="d-flex my-3">
-                <p class="mb-0 mr-2">Puanınız * :</p>
-                <div class="text-primary">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div>
-              </div>
-              <form>
+              <form [formGroup]="commentAddForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
-                  <label for="message">Yorumunuz *</label>
-                  <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                  <label for="commentDetail">Yorumunuz *</label>
+                  <textarea id="commentDetail" cols="30" rows="5" class="form-control" formControlName="commentDetail"></textarea>
                 </div>
                 <div class="form-group">
-                  <label for="name">Adınız *</label>
-                  <input type="text" class="form-control" id="name">
+                  <label for="nameSurname">Adınız *</label>
+                  <input type="text" class="form-control" id="nameSurname" formControlName="nameSurname">
                 </div>
                 <div class="form-group">
                   <label for="email">Email *</label>
-                  <input type="email" class="form-control" id="email">
+                  <input type="email" class="form-control" id="email" formControlName="email">
+                </div>
+                <div class="form-group">
+                  <label for="imageUrl">Resim</label>
+                  <input type="text" class="form-control" id="imageUrl" formControlName="imageUrl">
+                </div>
+                <div class="form-group">
+                  <label for="rating">Puanınız</label>
+                  <input type="number" class="form-control" id="rating" formControlName="rating" >
                 </div>
                 <br>
                 <div class="form-group mb-0">
-                  <input type="submit" value="Yorum Ekle" class="btn btn-primary px-3">
+                  <button type="submit" class="btn btn-primary px-3">Yorum Ekle</button>
                 </div>
               </form>
             </div>
@@ -173,6 +171,4 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
-<br>
+    <br>

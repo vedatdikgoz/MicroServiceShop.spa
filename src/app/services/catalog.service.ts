@@ -21,9 +21,8 @@ export class CatalogService {
 
   getProducts(): Observable<Product[]> {
     return this.httpClient.get<{ data: Product[] }>(this.path + "Products")
-      .pipe(map(response => response.data));
+      .pipe(map(response => response.data));  
   }
-
   getProductById(productId: string): Observable<Product> {
     return this.httpClient.get<Product>(this.path + "products/" + productId)
   }
@@ -43,49 +42,24 @@ export class CatalogService {
   }
 
   addCategory(category: Category): Observable<Category> {
-    return this.httpClient.post<Category>(this.path + 'categories', category, {
-      headers: new HttpHeaders({
-        //"Authorization": `Bearer ${this.authService.token}`,
-        //"Access-Control-Allow-Origin":"*"
-      })
-    })
+    return this.httpClient.post<Category>(this.path + 'categories', category)
   }
 
   addProduct(product: Product): Observable<Product> {
-    return this.httpClient.post<Product>(this.path + 'products', product, {
-      headers: new HttpHeaders({
-        //"Authorization": `Bearer ${this.authService.token}`,
-        //"Access-Control-Allow-Origin":"*"
-      })
-    })
+    return this.httpClient.post<Product>(this.path + 'products', product)
   }
 
   updateProduct(product: Product): Observable<Product> {
-    return this.httpClient.put<Product>(this.path + 'products', product,{
-      headers: new HttpHeaders({
-        //"Authorization": `Bearer ${this.authService.token}`,
-        //"Access-Control-Allow-Origin":"*"
-      })
-    });
+    return this.httpClient.put<Product>(this.path + 'products', product);
   }
 
 
   deleteProduct(id: string): Observable<void> {
-    return this.httpClient.delete<void>(this.path + 'Products/' + id,{
-      headers: new HttpHeaders({
-        //"Authorization": `Bearer ${this.authService.token}`,
-        //"Access-Control-Allow-Origin":"*"
-      })
-    });
+    return this.httpClient.delete<void>(this.path + 'Products/' + id);
   }
 
 
   updateProductDetail(productDetail: ProductDetail): Observable<ProductDetail> {
-    return this.httpClient.put<ProductDetail>(this.path + 'ProductDetails', productDetail,{
-      headers: new HttpHeaders({
-        //"Authorization": `Bearer ${this.authService.token}`,
-        //"Access-Control-Allow-Origin":"*"
-      })
-    });
+    return this.httpClient.put<ProductDetail>(this.path + 'ProductDetails', productDetail);
   }
 }

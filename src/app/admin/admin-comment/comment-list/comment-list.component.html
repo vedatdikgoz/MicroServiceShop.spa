@@ -1,0 +1,33 @@
+<div class="container mt-5">
+    <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Kullanıcı</th>
+                <th>Email</th>
+                <th>Resim</th>
+                <th>Yorum</th>
+                <th>Puan</th>
+                <th>Oluşturma Tarihi</th>
+                <th>Düzenle</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Ürün 1 -->
+            <tr *ngFor="let c of userComments">
+                <td>{{ c.nameSurname }}</td>
+                <td>{{ c.email }}</td>
+                <td>{{ c.imageUrl }}</td>
+                <td>{{ c.commentDetail }}</td>
+                <td>{{ c.rating }}</td>
+                <td>{{ c.createdDate | date:'dd-MM-yyyy HH:mm:ss' }}</td>
+                <td><a class="btn btn-warning btn-sm" [routerLink]="'comment-update/' + c.id"
+                    routerLinkActive="active">Düzenle</a></td>
+                <td><button class="btn btn-danger btn-sm" (click)="deleteComment(c.id)">Sil</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

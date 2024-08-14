@@ -49,4 +49,19 @@
 }
 
 
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+  }
+  
+
+  .dropdown-menu {
+    display: none; 
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    transform: translateX(-25%); 
+    margin-top: 0.125rem; 
+    z-index: 1000; 
+  }
+
 

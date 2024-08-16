@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, switchMap } from 'rxjs';
+import { catchError, map, Observable, of, switchMap } from 'rxjs';
 import { Basket } from '../models/basket/basket';
 import { BasketItem } from '../models/basket/basketItem';
 import { jwtDecode } from 'jwt-decode';
@@ -79,11 +79,12 @@ export class BasketService {
   }
 
   get(): Observable<Basket> {
-    return this.httpClient.get<Basket>(`${this.baseUrl}Baskets`).pipe(
+    return this.httpClient.get<{data: Basket}>(`${this.baseUrl}Baskets`).pipe(
+      map(response => response.data),  // response'dan data'yı çıkartıyorum
       catchError(() => {
-        const userId = this.getUserIdFromToken();
-        const emptyBasket = new Basket(userId ?? '', this.basket ? this.basket.basketItems : []);
-        return of(emptyBasket);
+        const userId = this.getUserIdFromToken();    
+        //const emptyBasket = new Basket(userId ?? '', []);
+        return of();
       })
     );
   }

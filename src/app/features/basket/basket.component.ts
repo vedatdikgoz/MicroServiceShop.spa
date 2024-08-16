@@ -13,10 +13,11 @@ import { CommonModule } from '@angular/common';
   styleUrl: './basket.component.css'
 })
 export class BasketComponent implements OnInit {
-  basketItems!: BasketItem[];
-  basketItem!: BasketItem;
+ 
   basket!: Basket;
+  basketItems: BasketItem[] = [];
   loading = false;
+  counter: number = 1;
 
   constructor(private basketService: BasketService) { }
 
@@ -24,26 +25,42 @@ export class BasketComponent implements OnInit {
     this.loadBasket();
   }
 
-  loadBasket(): void {
-    this.loading = true;
+  increment() {
+    this.counter++;
+  }
+
+  decrement() {
+    if (this.counter > 1) {
+      this.counter--;
+    }
+  }
+
   
-    this.basketService.get().pipe(
-      tap(data => this.basketItems = data?.basketItems || []),
-      catchError(error => {
-        console.error('Error loading basket', error);
-        return of([]); 
-      }),
-      finalize(() => this.loading = false)
-    ).subscribe();
+  loadBasket(): void {
+    this.basketService.get().subscribe({
+      next: (basket: Basket) => {
+        if (basket) {
+          this.basket = basket;
+          this.basketItems = basket.basketItems || []; // Eğer basketItems undefined ise boş diziye ayarlıyoruz.
+        } else {
+          // Eğer basket undefined ise, boş bir sepet ve basketItems oluştur.
+          this.basket = new Basket();
+          this.basketItems = [];
+        }
+      },
+      error: (error) => {
+        console.error('Sepet verisini alırken bir hata oluştu:', error);
+      }
+    });
   }
 
 
 
   
  
-  appliedDiscount(discountPrice: number): void {
-    this.basketItem._discountAppliedPrice = discountPrice;
-  }
+  // appliedDiscount(discountPrice: number): void {
+  //   this.basketItem._discountAppliedPrice = discountPrice;
+  // }
  
 
 }

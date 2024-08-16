@@ -29,7 +29,6 @@ export class ClientHomeComponent implements OnInit {
       })
     ).subscribe((userInfo: any) => {
       this.userInfo = userInfo;
-      console.log(userInfo)
     });
   }
 }

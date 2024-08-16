@@ -18,6 +18,7 @@ export class CategoryListComponent {
   ngOnInit() {
     this.catalogService.getCategories().subscribe(data => {
       this.categories = data;
+      console.log(data)
     });
   }
 }

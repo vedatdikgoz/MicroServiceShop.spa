@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CatalogService } from '../../services/catalog.service';
-import { Product } from '../../models/product';
+import { Product } from '../../models/catalog/product';
 import { CommonModule } from '@angular/common';
 import { catchError, of } from 'rxjs';
 

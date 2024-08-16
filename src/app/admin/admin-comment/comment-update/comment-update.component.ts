@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserComment } from '../../../models/userComment';
+import { UserComment } from '../../../models/comment/userComment';
 import { CommentService } from '../../../services/comment.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
-import { validateLocaleAndSetLanguage } from 'typescript';
 
 @Component({
   selector: 'comment-update',

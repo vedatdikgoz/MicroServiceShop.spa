@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RegisterUser } from '../models/registerUser';
+import { RegisterUser } from '../models/auth/registerUser';
 import { catchError, map, Observable, of } from 'rxjs';
-import { LoginUser } from '../models/loginUser';
-import { TokenResponse } from '../models/tokenResponse';
+import { LoginUser } from '../models/auth/loginUser';
+import { TokenResponse } from '../models/auth/tokenResponse';
 import {jwtDecode} from 'jwt-decode';
 
 @Injectable({

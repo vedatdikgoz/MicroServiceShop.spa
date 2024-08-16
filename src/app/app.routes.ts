@@ -13,6 +13,7 @@ import { ProductDetailUpdateComponent } from './admin/admin-product/product-deta
 import { CommentListComponent } from './admin/admin-comment/comment-list/comment-list.component';
 import { CommentUpdateComponent } from './admin/admin-comment/comment-update/comment-update.component';
 import { AuthComponent } from './auth/auth.component';
+import { BasketComponent } from './features/basket/basket.component';
 
 
 export const routes: Routes = [
@@ -22,7 +23,8 @@ export const routes: Routes = [
             { path: 'home', component: CatalogComponent },
             { path:'home/category-product/:id', component:ClientCategoryProductComponent },
             { path:'home/product-detail/:id', component:ClientProductDetailComponent },
-            { path:'auth', component:AuthComponent }
+            { path:'auth', component:AuthComponent },
+            { path:'basket', component:BasketComponent}
           ]
      },
     {

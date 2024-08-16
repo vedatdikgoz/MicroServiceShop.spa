@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, NgForm, ReactiveFormsModule, Validators } from 
 import { CatalogService } from '../../../services/catalog.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Product } from '../../../models/product';
+import { Product } from '../../../models/catalog/product';
 import { catchError, of } from 'rxjs';
-import { Category } from '../../../models/category';
+import { Category } from '../../../models/catalog/category';
 
 @Component({
   selector: 'product-update',

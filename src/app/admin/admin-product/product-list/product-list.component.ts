@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../../../models/product';
+import { Product } from '../../../models/catalog/product';
 import { CatalogService } from '../../../services/catalog.service';
 import { catchError, of } from 'rxjs';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { ProductImage } from '../../../models/productImage';
+import { ProductImage } from '../../../models/catalog/productImage';
 
 @Component({
   selector: 'product-list',

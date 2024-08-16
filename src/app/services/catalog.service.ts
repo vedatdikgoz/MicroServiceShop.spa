@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Category } from '../models/category';
+import { Category } from '../models/catalog/category';
 import { map, Observable } from 'rxjs';
-import { Product } from '../models/product';
-import { ProductImage } from '../models/productImage';
-import { ProductDetail } from '../models/productDetail';
+import { Product } from '../models/catalog/product';
+import { ProductImage } from '../models/catalog/productImage';
+import { ProductDetail } from '../models/catalog/productDetail';
 import { environment } from '../environments/environment';
 
 @Injectable({

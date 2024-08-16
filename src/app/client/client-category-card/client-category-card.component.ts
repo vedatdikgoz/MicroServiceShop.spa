@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Category } from '../../models/category';
+import { Category } from '../../models/catalog/category';
 import { CatalogService } from '../../services/catalog.service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 

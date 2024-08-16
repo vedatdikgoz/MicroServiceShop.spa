@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { CatalogService } from '../../../services/catalog.service';
 import { catchError, of } from 'rxjs';
-import { ProductDetail } from '../../../models/productDetail';
+import { ProductDetail } from '../../../models/catalog/productDetail';
 
 @Component({
   selector: 'product-detail-update',

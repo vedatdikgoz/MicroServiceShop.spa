@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CatalogService } from '../../../services/catalog.service';
 import { Router } from '@angular/router';
-import { Product } from '../../../models/product';
-import { Category } from '../../../models/category';
+import { Product } from '../../../models/catalog/product';
+import { Category } from '../../../models/catalog/category';
 import { catchError, of } from 'rxjs';
 
 @Component({

@@ -3,8 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { RegisterUser} from '../models/registerUser';
-import { LoginUser} from '../models/loginUser';
+import { RegisterUser} from '../models/auth/registerUser';
 
 @Component({
   selector: 'auth',

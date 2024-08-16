@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { CatalogService } from '../../../services/catalog.service';
-import { Category } from '../../../models/category';
+import { Category } from '../../../models/catalog/category';
 
 @Component({
   selector: 'category-list',

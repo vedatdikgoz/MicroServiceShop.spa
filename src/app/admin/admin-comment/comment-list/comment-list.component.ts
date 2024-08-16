@@ -2,7 +2,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { CommentService } from '../../../services/comment.service';
 import { catchError, of } from 'rxjs';
-import { UserComment } from '../../../models/userComment';
+import { UserComment } from '../../../models/comment/userComment';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({

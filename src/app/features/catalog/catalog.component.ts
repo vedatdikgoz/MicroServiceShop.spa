@@ -3,7 +3,7 @@ import { ClientCarouselComponent } from "../../client/client-carousel/client-car
 import { ClientCategoryCardComponent } from "../../client/client-category-card/client-category-card.component";
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { Product } from '../../models/product';
+import { Product } from '../../models/catalog/product';
 import { CatalogService } from '../../services/catalog.service';
 import { catchError, of } from 'rxjs';
 

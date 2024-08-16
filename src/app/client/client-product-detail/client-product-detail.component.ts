@@ -1,18 +1,19 @@
 import { Component, Input } from '@angular/core';
-import { ProductImage } from '../../models/productImage';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ProductImage } from '../../models/catalog/productImage';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CatalogService } from '../../services/catalog.service';
 import { catchError, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { ProductDetail } from '../../models/productDetail';
+import { ProductDetail } from '../../models/catalog/productDetail';
 import { CommentService } from '../../services/comment.service';
-import { UserComment } from '../../models/userComment';
+import { UserComment } from '../../models/comment/userComment';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { BasketComponent } from '../../features/basket/basket.component';
 
 @Component({
   selector: 'client-product-detail',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, RouterLinkActive],
   templateUrl: './client-product-detail.component.html',
   styleUrl: './client-product-detail.component.css'
 })

@@ -23,6 +23,9 @@ export class AuthService {
     return this.httpClient.post<RegisterUser>(this.path + "Users/Register", user)
   }
 
+  getUserInfo():Observable<any> {
+    return this.httpClient.get<any>(this.path + "Users/GetUserInfo")
+  }
 
   login(loginUser: LoginUser): Observable<any> {
     const url = this.tokenUrl;

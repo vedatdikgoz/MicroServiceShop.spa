@@ -23,12 +23,14 @@ export class CommentUpdateComponent implements OnInit {
     private commentService: CommentService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) 
+  {
+    this.id = this.route.snapshot.paramMap.get('id') || '';  
+    this.loadComment();
+  }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id') || '';
     this.initializeForm();
-    this.loadComment();
   }
 
   initializeForm(): void {

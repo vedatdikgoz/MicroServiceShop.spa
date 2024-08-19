@@ -16,19 +16,20 @@ import { catchError, of } from 'rxjs';
 })
 export class ProductAddComponent implements OnInit {
   productAddForm!: FormGroup;
-  categories: Category[] = [];
+  categories!: Category[];
+  errorMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
     private catalogService: CatalogService,
     private router: Router
-  ) {}
+  ) 
+  {
+    this.loadCategories()
+  }
 
   ngOnInit(): void {
     this.initializeForm();
-    this.catalogService
-    .getCategories()
-    .subscribe(categories => this.categories = categories);
   }
 
   initializeForm(): void {
@@ -42,10 +43,15 @@ export class ProductAddComponent implements OnInit {
   }
 
   loadCategories(): void {
-    this.catalogService.getCategories().pipe().subscribe((categories: Category[]) => 
-      {
+    this.catalogService.getCategories().pipe(
+      catchError((error) => {
+        console.error('Kategoriler yüklenirken bir hata oluştu:', error);
+        this.errorMessage = 'Kategoriler yüklenirken bir hata oluştu.';
+        return of([]);
+      })
+    ).subscribe((categories: Category[]) => {
       this.categories = categories;
-      });
+    });
   }
 
   onSubmit(): void {

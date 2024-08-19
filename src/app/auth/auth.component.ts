@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { RegisterUser} from '../models/auth/registerUser';
+import { RegisterUser } from '../models/auth/registerUser';
 
 @Component({
   selector: 'auth',
@@ -23,12 +23,14 @@ export class AuthComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private authService: AuthService) { }
-
-  ngOnInit(): void {
+    private authService: AuthService) {
     this.route.queryParams.subscribe(params => {
       this.activeTab = params['tab'] || 'login';
     });
+  }
+
+  ngOnInit(): void {
+
     this.initializeRegisterForm();
     this.initializeLoginForm();
   }
@@ -59,9 +61,9 @@ export class AuthComponent implements OnInit {
           this.isSubmitting = false;
           this.router.navigate(['home']);
         },
-        error: (error:any) => {
+        error: (error: any) => {
           this.isSubmitting = false;
-           console.error('Kayıt oluşturulurken bir hata oluştu:', error);
+          console.error('Kayıt oluşturulurken bir hata oluştu:', error);
         }
       });
     }

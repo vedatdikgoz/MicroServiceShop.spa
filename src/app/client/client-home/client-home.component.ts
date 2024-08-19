@@ -14,11 +14,14 @@ import { catchError, of } from 'rxjs';
 })
 export class ClientHomeComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) 
+  { 
+    this.loadUserInfo();
+  }
 
   userInfo:any;
   ngOnInit() {
-    this.loadUserInfo();
+    
   }
 
   loadUserInfo(): void {

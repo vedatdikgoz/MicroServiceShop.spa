@@ -17,10 +17,7 @@ export class ClientCategoryProductComponent implements OnInit {
   products: Product[] = [];
   errorMessage: string = '';
 
-  constructor(private route: ActivatedRoute, private catalogService: CatalogService) { }
-
-  ngOnInit(): void {
-
+  constructor(private route: ActivatedRoute, private catalogService: CatalogService) {
     this.categoryId = this.route.snapshot.paramMap.get('id');
 
     if (this.categoryId) {
@@ -30,12 +27,17 @@ export class ClientCategoryProductComponent implements OnInit {
     }
   }
 
+  ngOnInit(): void {
 
-  loadProducts(categoryId:string): void {
+
+  }
+
+
+  loadProducts(categoryId: string): void {
     this.catalogService.getProductsWithCategory(categoryId).pipe(
       catchError((error) => {
         console.error('Ürünler yüklenirken bir hata oluştu:', error);
-        this.errorMessage = 'Ürünler yüklenirken bir hata oluştu. Lütfen tekrar deneyin.';
+        this.errorMessage = 'Ürünler yüklenirken bir hata oluştu.';
         return of([]);
       })
     ).subscribe((products: Product[]) => {

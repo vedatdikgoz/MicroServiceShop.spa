@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ProductImage } from '../../models/catalog/productImage';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CatalogService } from '../../services/catalog.service';
@@ -8,7 +8,9 @@ import { ProductDetail } from '../../models/catalog/productDetail';
 import { CommentService } from '../../services/comment.service';
 import { UserComment } from '../../models/comment/userComment';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BasketComponent } from '../../features/basket/basket.component';
+import { Product } from '../../models/catalog/product';
+import { BasketItem } from '../../models/basket/basketItem';
+import { BasketService } from '../../services/basket.service';
 
 @Component({
   selector: 'client-product-detail',
@@ -18,24 +20,25 @@ import { BasketComponent } from '../../features/basket/basket.component';
   styleUrl: './client-product-detail.component.css'
 })
 export class ClientProductDetailComponent {
-  productId: string | null = null;
+  productId!: string | null;
   productImages: ProductImage[] = [];
   productComments: UserComment[] = [];
   productDetail!: ProductDetail;
   errorMessage: string = '';
   commentAddForm!: FormGroup;
-  commentCounter!:number;
+  commentCounter!: number;
+  product!: Product;
+  basketItem?: BasketItem;
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private router: Router,
     private catalogService: CatalogService,
-    private commentService: CommentService) { }
-  
-  ngOnInit(): void {
-
-    this.productId = this.route.snapshot.paramMap.get('id');
+    private commentService: CommentService,
+    private basketService: BasketService) 
+    { 
+      this.productId = this.route.snapshot.paramMap.get('id');
 
     if (this.productId) {
       this.loadProductImages(this.productId);
@@ -44,10 +47,13 @@ export class ClientProductDetailComponent {
     } else {
       this.errorMessage = 'Product ID bulunamadı.';
     }
+    }
+
+  ngOnInit(): void {
     this.initializeForm();
   }
 
-  loadProductImages(productId:string): void {
+  loadProductImages(productId: string): void {
     this.catalogService.getProductImages(productId).pipe(
       catchError((error) => {
         console.error('Ürün resimleri yüklenirken bir hata oluştu:', error);
@@ -59,7 +65,7 @@ export class ClientProductDetailComponent {
     });
   }
 
-  loadProductDetail(productId:string): void {
+  loadProductDetail(productId: string): void {
     this.catalogService.getProductDetail(productId).pipe(
       catchError((error) => {
         console.error('Ürün resimleri yüklenirken bir hata oluştu:', error);
@@ -72,7 +78,7 @@ export class ClientProductDetailComponent {
   }
 
 
-  loadProductComments(productId:string): void {
+  loadProductComments(productId: string): void {
     this.commentService.getCommentByProductId(productId).pipe(
       catchError((error) => {
         console.error('Ürün yorumları yüklenirken bir hata oluştu:', error);
@@ -81,7 +87,7 @@ export class ClientProductDetailComponent {
       })
     ).subscribe((productComments: UserComment[]) => {
       this.productComments = productComments;
-      this.commentCounter = productComments.length; 
+      this.commentCounter = productComments.length;
     });
   }
 
@@ -100,7 +106,6 @@ export class ClientProductDetailComponent {
   onSubmit(): void {
     if (this.commentAddForm.valid) {
       const newUserComment: UserComment = this.commentAddForm.value;
-      console.log(newUserComment)
       this.commentService.addComment(newUserComment).pipe(
         catchError((error) => {
           console.error('Yorum eklenirken bir hata oluştu:', error);
@@ -111,9 +116,88 @@ export class ClientProductDetailComponent {
           this.router.navigate(['home']);
         },
         error: (error) => {
-          console.error('Yorum eklenirken bir hata oluştu:', error); 
+          console.error('Yorum eklenirken bir hata oluştu:', error);
         }
       });
     }
   }
+
+  // addToBasket(): void {
+  //   this.catalogService.getProductById(this.productId!).pipe(
+  //     catchError((error) => {
+  //       console.error('Ürün yüklenirken bir hata oluştu:', error);
+  //       this.errorMessage = 'Ürün yüklenirken bir hata oluştu. Lütfen tekrar deneyin.';
+  //       return of(null); 
+  //     })
+  //   ).subscribe((response: any) => {
+  //     this.product = response.data;
+  
+  //     this.basketItem = {
+  //       productId: this.product.id, 
+  //       productName: this.product.name,
+  //       price: this.product.price ?? 0,
+  //       quantity: 1
+  //     };
+  //     this.basketService.addBasketItem(this.basketItem!).subscribe({
+  //       next: (success) => {
+  //         if (success) {
+  //           console.log('Ürün başarıyla sepete eklendi.');
+  //         } else {
+  //           console.error('Ürün sepete eklenemedi.');
+  //         }
+  //       },
+  //       error: (error) => {
+  //         console.error('Ürün sepete eklenirken hata oluştu', error);
+  //       }
+  //     });
+  //   });
+  // }
+
+  addToBasket(): void {
+    this.catalogService.getProductById(this.productId!).pipe(
+      catchError((error) => {
+        console.error('Ürün yüklenirken bir hata oluştu:', error);
+        this.errorMessage = 'Ürün yüklenirken bir hata oluştu. Lütfen tekrar deneyin.';
+        return of(null); // Ürün yüklenemezse null döndür
+      })
+    ).subscribe({
+      next: (response: any) => {
+        if (response && response.data) {
+          this.product = response.data;
+  
+          this.basketItem = {
+            productId: this.product.id, 
+            productName: this.product.name,
+            price: this.product.price ?? 0,
+            quantity: 1
+          };
+  
+          this.basketService.addBasketItem(this.basketItem!).pipe(
+            catchError((error) => {
+              console.error('Ürün sepete eklenirken hata oluştu:', error);
+              this.errorMessage = 'Ürün sepete eklenirken bir hata oluştu. Lütfen tekrar deneyin.';
+              return of(); // Sepete eklenemezse null döndür
+            })
+          ).subscribe({
+            next: () => {         
+               console.log('Ürün başarıyla sepete eklendi.');
+            },
+            error: (error) => {
+              console.error('Sepet güncellenirken hata oluştu:', error);
+              this.errorMessage = 'Sepet güncellenirken bir hata oluştu. Lütfen tekrar deneyin.';
+            }
+          });
+  
+        } else {
+          this.errorMessage = 'Ürün bilgileri alınamadı.';
+        }
+      },
+      error: (error) => {
+        console.error('Ürün yüklenirken bir hata oluştu:', error);
+        this.errorMessage = 'Ürün yüklenirken bir hata oluştu. Lütfen tekrar deneyin.';
+      }
+    });
+  }
+  
+ 
 }

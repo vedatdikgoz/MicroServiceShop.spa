@@ -17,10 +17,13 @@ export class CommentListComponent {
   userComments: UserComment[] = [];
 
   constructor(
-    private commentService: CommentService,private router: Router) {}
+    private commentService: CommentService,private router: Router) 
+    {
+      this.loadComments();
+    }
 
   ngOnInit(): void {
-    this.loadComments();
+    
   }
 
   loadComments(): void {

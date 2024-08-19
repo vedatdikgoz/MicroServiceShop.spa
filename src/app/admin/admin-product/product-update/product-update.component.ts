@@ -27,13 +27,15 @@ export class ProductUpdateComponent implements OnInit {
     private catalogService: CatalogService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
-
-  ngOnInit(): void {
+  ) 
+  {
     this.productId = this.route.snapshot.paramMap.get('id') || ''; // URL'den ID'yi al
-    this.initializeForm();
     this.loadCategories();
     this.loadProduct();
+  }
+
+  ngOnInit(): void {
+    this.initializeForm();
   }
 
   initializeForm(): void {

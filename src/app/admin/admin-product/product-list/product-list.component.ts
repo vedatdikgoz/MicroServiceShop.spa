@@ -21,10 +21,13 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private catalogService: CatalogService, 
-    private router: Router) {}
+    private router: Router) 
+    {
+      this.loadProducts();
+    }
 
   ngOnInit(): void {
-    this.loadProducts();
+    
   }
 
   loadProducts(): void {

@@ -23,12 +23,14 @@ export class ProductDetailUpdateComponent implements OnInit {
     private catalogService: CatalogService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) 
+  {
+    this.productId = this.route.snapshot.paramMap.get('id') || '';
+    this.loadProductDetail();
+  }
 
   ngOnInit(): void {
-    this.productId = this.route.snapshot.paramMap.get('id') || '';
     this.initializeForm();
-    this.loadProductDetail();
   }
 
   initializeForm(): void {

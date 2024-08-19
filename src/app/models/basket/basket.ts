@@ -4,10 +4,14 @@ export class Basket {
   userId!: string
   discountCode?: string | null
   discountRate?: number | null
-
+  totalPrice!: number
   basketItems: BasketItem[] = [];
 
-  get getTotalPrice(): number {
-    return this.basketItems.reduce((sum, item) => sum + item.getCurrentPrice, 0);
+
+
+  get appliedDiscountTotalPrice(): number {
+    // Eğer discountRate undefined veya null ise, 0 olarak kabul et
+    const rate = this.discountRate ?? 0;
+    return this.totalPrice - (this.totalPrice * (rate / 100));
   }
 }

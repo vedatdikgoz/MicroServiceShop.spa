@@ -23,7 +23,7 @@ export class CommentService {
   }
 
   getCommentByProductId(productId: string): Observable<UserComment[]> {
-    return this.httpClient.get<{ data: UserComment[] }>(`${this.baseUrl}Comments/getallbyproductid//${productId}`)
+    return this.httpClient.get<{ data: UserComment[] }>(`${this.baseUrl}Comments/getallbyproductid/${productId}`)
     .pipe(map(response => response.data))
   }
 

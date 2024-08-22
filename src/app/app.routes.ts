@@ -14,6 +14,7 @@ import { CommentListComponent } from './admin/admin-comment/comment-list/comment
 import { CommentUpdateComponent } from './admin/admin-comment/comment-update/comment-update.component';
 import { AuthComponent } from './auth/auth.component';
 import { BasketComponent } from './features/basket/basket.component';
+import { OrderComponent } from './features/order/order.component';
 
 
 export const routes: Routes = [
@@ -39,5 +40,6 @@ export const routes: Routes = [
         { path: 'comment-list', component: CommentListComponent},
         { path: "comment-list/comment-update/:id", component: CommentUpdateComponent}
       ]
-    }
+    },
+    { path:'order', component:OrderComponent}
 ];

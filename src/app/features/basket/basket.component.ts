@@ -5,11 +5,12 @@ import { Basket } from '../../models/basket/basket';
 import { catchError, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'basket',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule,RouterLink,RouterLinkActive],
   templateUrl: './basket.component.html',
   styleUrl: './basket.component.css'
 })

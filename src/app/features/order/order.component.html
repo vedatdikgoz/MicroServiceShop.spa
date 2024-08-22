@@ -1,0 +1,115 @@
+<br>
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <form>
+            <div class="row w-100">
+                <div class="col-lg-6 mb-5">
+                    <h5 class="section-title position-relative text-uppercase mb-3">
+                        <span class="bg-warning pr-3">Fatura Adresİ</span>
+                    </h5>
+                    <div class="bg-light p-30">
+                        <div class="form-group">
+                            <label>İsim</label>
+                            <input class="form-control" type="text" formControlName="name" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label>Soyisim</label>
+                            <input class="form-control" type="text" formControlName="surname" id="surname">
+                        </div>
+                        <div class="form-group">
+                            <label>E-mail</label>
+                            <input class="form-control" type="text" formControlName="email" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label>Telefon</label>
+                            <input class="form-control" type="text" formControlName="phone" id="phone">
+                        </div>
+                        <div class="form-group">
+                            <label>Adres</label>
+                            <input class="form-control" type="text" formControlName="adressLine" id="adressLine">
+                        </div>
+                        <div class="form-group">
+                            <label>Posta Kodu</label>
+                            <input class="form-control" type="text" formControlName="zipCode" id="zipCode">
+                        </div>
+                        <div class="form-group">
+                            <label>Ülke</label>
+                            <select class="custom-select w-100"formControlName="country" id="country">
+                                <option selected>Türkiye</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>İl</label>
+                            <select class="custom-select w-100"formControlName="province" id="province">
+                                <option selected>İstanbul</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>İlçe</label>
+                            <select class="custom-select w-100"formControlName="district" id="district">
+                                <option selected>Avcılar</option>
+                            </select>
+                        </div>                       
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <h5 class="section-title position-relative text-uppercase mb-3">
+                        <span class="bg-warning pr-3">Sİparİş Tutarı</span>
+                    </h5>
+                    <div class="bg-light p-30 mb-5" *ngIf="basket">
+                        <div class="border-bottom">
+                            <h6 class="mb-3">Ürünler</h6>
+                            <div class="d-flex justify-content-between" *ngFor="let item of basketItems">
+                                <p>{{item.productName}} - [<span style="color:red;">{{item.quantity}}</span>]</p>
+                                <p>{{item.price}}</p>
+                            </div>
+                        </div>
+                        <div class="border-bottom pt-3 pb-2">
+                            <div class="d-flex justify-content-between mb-3">
+                                <h6>Ürün Tutarı</h6>
+                                <h6>{{basket.totalPrice}}</h6>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h6 class="font-weight-medium">Kargo</h6>
+                                <h6 class="font-weight-medium">$10</h6>
+                            </div>
+                        </div>
+                        <div class="pt-2">
+                            <div class="d-flex justify-content-between mt-2">
+                                <h5>Toplam</h5>
+                                <h5>$160</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-5">
+                        <h5 class="section-title position-relative text-uppercase mb-3">
+                            <span class="bg-warning pr-3">Ödeme</span>
+                        </h5>
+                        <div class="bg-light p-30">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" name="payment" id="paypal">
+                                    <label class="custom-control-label" for="paypal">Paypal</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" name="payment" id="directcheck">
+                                    <label class="custom-control-label" for="directcheck">Kapıda ödeme</label>
+                                </div>
+                            </div>
+                            <div class="form-group mb-4">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
+                                    <label class="custom-control-label" for="banktransfer">Banka/Kredi Kartı</label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary font-weight-bold py-3 w-100">Siparişi Tamamla</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

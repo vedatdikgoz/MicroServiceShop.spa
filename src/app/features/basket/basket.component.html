@@ -6,6 +6,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>Products</th>
+                        <th>Resim</th>
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
@@ -14,7 +15,8 @@
                 </thead>
                 <tbody class="align-middle">
                     <tr *ngFor="let basketItem of basketItems">
-                        <td class="align-middle"><img src="" alt="" style="width: 50px;">{{basketItem.productName}}</td>
+                        <td class="align-middle">{{basketItem.productName}}</td>
+                        <td class="align-middle"><img src="{{basketItem.imageUrl}}" alt="" style="width: 50px;"></td>
                         <td class="align-middle">{{basketItem.price}}</td>
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
@@ -73,9 +75,9 @@
                 <div class="pt-2">
                     <div class="d-flex justify-content-between mt-2">
                         <h5>Sepet Tutarı</h5>
-                        {{ isDiscountApplied ? basket.appliedDiscountTotalPrice : basket.totalPrice }}
+                        {{ isDiscountApplied ? basket.totalPrice - (basket.totalPrice * (basket.discountRate! / 100)) : basket.totalPrice }}
                     </div>
-                    <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Ödeme İşlemi</button>
+                    <button class="btn btn-block btn-primary font-weight-bold my-3 py-3" routerLink="/order" routerLinkActive="active">Ödeme İşlemi</button>
                 </div>
             </div>
         </div>

@@ -122,37 +122,7 @@ export class ClientProductDetailComponent {
     }
   }
 
-  // addToBasket(): void {
-  //   this.catalogService.getProductById(this.productId!).pipe(
-  //     catchError((error) => {
-  //       console.error('Ürün yüklenirken bir hata oluştu:', error);
-  //       this.errorMessage = 'Ürün yüklenirken bir hata oluştu. Lütfen tekrar deneyin.';
-  //       return of(null); 
-  //     })
-  //   ).subscribe((response: any) => {
-  //     this.product = response.data;
-  
-  //     this.basketItem = {
-  //       productId: this.product.id, 
-  //       productName: this.product.name,
-  //       price: this.product.price ?? 0,
-  //       quantity: 1
-  //     };
-  //     this.basketService.addBasketItem(this.basketItem!).subscribe({
-  //       next: (success) => {
-  //         if (success) {
-  //           console.log('Ürün başarıyla sepete eklendi.');
-  //         } else {
-  //           console.error('Ürün sepete eklenemedi.');
-  //         }
-  //       },
-  //       error: (error) => {
-  //         console.error('Ürün sepete eklenirken hata oluştu', error);
-  //       }
-  //     });
-  //   });
-  // }
-
+ 
   addToBasket(): void {
     this.catalogService.getProductById(this.productId!).pipe(
       catchError((error) => {
@@ -168,6 +138,7 @@ export class ClientProductDetailComponent {
           this.basketItem = {
             productId: this.product.id, 
             productName: this.product.name,
+            imageUrl:this.product.imageUrl,
             price: this.product.price ?? 0,
             quantity: 1
           };

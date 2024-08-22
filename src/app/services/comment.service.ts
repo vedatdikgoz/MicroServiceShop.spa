@@ -10,7 +10,7 @@ import { environment } from '../environments/environment';
 export class CommentService {
 
   constructor(private httpClient: HttpClient) { }
-  
+
   private baseUrl = `${environment.gatewayBaseUri}/${environment.commentPath}`;
 
   getComments(): Observable<UserComment[]> {
@@ -24,7 +24,7 @@ export class CommentService {
 
   getCommentByProductId(productId: string): Observable<UserComment[]> {
     return this.httpClient.get<{ data: UserComment[] }>(`${this.baseUrl}Comments/getallbyproductid/${productId}`)
-    .pipe(map(response => response.data))
+      .pipe(map(response => response.data))
   }
 
   deleteComment(id: string): Observable<void> {
@@ -33,11 +33,11 @@ export class CommentService {
 
   updateComment(userComment: UserComment): Observable<UserComment> {
     return this.httpClient.put<UserComment>(`${this.baseUrl}Comments`, userComment)
-    };
+  };
 
 
-    addComment(comment: UserComment): Observable<UserComment> {
-      return this.httpClient.post<UserComment>(`${this.baseUrl}Comments`, comment)
-    }
-  
+  addComment(comment: UserComment): Observable<UserComment> {
+    return this.httpClient.post<UserComment>(`${this.baseUrl}Comments`, comment)
+  }
+
 }

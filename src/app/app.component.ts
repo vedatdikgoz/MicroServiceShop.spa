@@ -4,7 +4,6 @@ import { CatalogComponent } from "./features/catalog/catalog.component";
 import { ClientFooterComponent } from './client/client-footer/client-footer.component';
 import { ClientCarouselComponent } from './client/client-carousel/client-carousel.component';
 import { ClientCategoryCardComponent } from './client/client-category-card/client-category-card.component';
-import { ClientShoppingCartComponent } from './client/client-shopping-cart/client-shopping-cart.component';
 import { AuthComponent } from './auth/auth.component';
 import { ClientCategoryProductComponent } from './client/client-category-product/client-category-product.component';
 
@@ -19,7 +18,6 @@ import { ClientCategoryProductComponent } from './client/client-category-product
     CatalogComponent,
     ClientCarouselComponent,
     ClientCategoryCardComponent,
-    ClientShoppingCartComponent,
     ClientCategoryProductComponent,
     AuthComponent
 ],

@@ -15,6 +15,8 @@ import { CommentUpdateComponent } from './admin/admin-comment/comment-update/com
 import { AuthComponent } from './auth/auth.component';
 import { BasketComponent } from './features/basket/basket.component';
 import { OrderComponent } from './features/order/order.component';
+import { PaymentComponent } from './features/payment/payment.component';
+import { OrderHistoryComponent } from './features/order/order-history/order-history.component';
 
 
 export const routes: Routes = [
@@ -25,7 +27,10 @@ export const routes: Routes = [
             { path:'home/category-product/:id', component:ClientCategoryProductComponent },
             { path:'home/product-detail/:id', component:ClientProductDetailComponent },
             { path:'auth', component:AuthComponent },
-            { path:'basket', component:BasketComponent}
+            { path:'basket', component:BasketComponent},
+            { path:'order', component:OrderComponent},
+            { path:'order/payment', component:PaymentComponent},
+            { path:'orderHistory', component:OrderHistoryComponent}
           ]
      },
     {
@@ -40,6 +45,5 @@ export const routes: Routes = [
         { path: 'comment-list', component: CommentListComponent},
         { path: "comment-list/comment-update/:id", component: CommentUpdateComponent}
       ]
-    },
-    { path:'order', component:OrderComponent}
+    }
 ];

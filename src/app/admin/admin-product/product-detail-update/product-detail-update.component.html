@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<!-- <div class="container mt-5">
     <h2>Ürün Bilgileri</h2>
     <form [formGroup]="productDetailUpdateForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
@@ -25,5 +25,43 @@
   
       <button type="submit" class="btn btn-primary mt-4">Güncelle</button>
     </form>
+    <button routerLink="/admin/product-list" routerLinkActive="active" class="btn btn-secondary mt-4">Geri Dön</button>
+  </div> -->
+
+
+  <div class="container mt-5">
+    <h2>Ürün Bilgileri</h2>
+    <form [formGroup]="productDetailUpdateForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="description">Açıklama</label>
+        <textarea  
+          id="description" 
+          formControlName="description" 
+          class="form-control form-control-lg" 
+          placeholder="Açıklama"
+          rows="4"
+        ></textarea>
+      </div>
+  
+      <div class="form-group mt-3">
+        <label for="productInfo">Ürün Bilgisi</label>
+        <textarea 
+          id="productInfo" 
+          formControlName="productInfo" 
+          class="form-control form-control-lg" 
+          placeholder="Ürün Bilgisi"
+          rows="4"
+        ></textarea>
+      </div>
+  
+      <button type="submit" class="btn btn-primary mt-4">Güncelle</button>
+    </form>
+    <button 
+      routerLink="/admin/product-list" 
+      routerLinkActive="active" 
+      class="btn btn-secondary mt-4 float-end">
+      Geri Dön
+    </button>
   </div>
+  
   

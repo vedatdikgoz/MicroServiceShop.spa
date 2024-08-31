@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CatalogService } from '../../../services/catalog.service';
 import { catchError, of } from 'rxjs';
 import { ProductDetail } from '../../../models/catalog/productDetail';
@@ -8,7 +8,7 @@ import { ProductDetail } from '../../../models/catalog/productDetail';
 @Component({
   selector: 'product-detail-update',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,RouterLink, RouterLinkActive],
   templateUrl: './product-detail-update.component.html',
   styleUrl: './product-detail-update.component.css'
 })

@@ -6,5 +6,6 @@ export const environment = {
     basketPath: 'services/basket/',
     discountPath: 'services/discount/',
     orderPath: 'services/order/',
-    commentPath: 'services/comment/'
+    commentPath: 'services/comment/',
+    messagePath: 'services/message'
   };

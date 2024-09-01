@@ -17,6 +17,7 @@ import { BasketComponent } from './features/basket/basket.component';
 import { OrderComponent } from './features/order/order.component';
 import { PaymentComponent } from './features/payment/payment.component';
 import { OrderHistoryComponent } from './features/order/order-history/order-history.component';
+import { UserMessageComponent } from './features/user-message/user-message.component';
 
 
 export const routes: Routes = [
@@ -43,7 +44,8 @@ export const routes: Routes = [
         { path: "product-list/product-update/:id", component:ProductUpdateComponent },
         { path: "product-list/product-detail-update/:id", component:ProductDetailUpdateComponent },
         { path: 'comment-list', component: CommentListComponent},
-        { path: "comment-list/comment-update/:id", component: CommentUpdateComponent}
+        { path: "comment-list/comment-update/:id", component: CommentUpdateComponent},
+        { path: 'message-list', component: UserMessageComponent}
       ]
     }
 ];

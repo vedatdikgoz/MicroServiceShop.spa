@@ -25,8 +25,8 @@
                 <td>{{ c.rating }}</td>
                 <td>{{ c.createdDate | date:'dd-MM-yyyy HH:mm:ss' }}</td>
                 <td><a class="btn btn-warning btn-sm" [routerLink]="'comment-update/' + c.id"
-                    routerLinkActive="active">Düzenle</a></td>
-                <td><button class="btn btn-danger btn-sm" (click)="deleteComment(c.id)">Sil</button></td>
+                    routerLinkActive="active"><i class="fa fa-pencil"></i></a></td>
+                <td><button class="btn btn-danger btn-sm" (click)="deleteComment(c.id)"><i class="fa fa-trash"></i></button></td>
             </tr>
         </tbody>
     </table>

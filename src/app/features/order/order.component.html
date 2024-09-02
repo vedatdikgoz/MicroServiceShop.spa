@@ -71,8 +71,14 @@
                                 <h6>{{basket.totalPrice}}</h6>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <h6 class="font-weight-medium">Kargo</h6>
-                                <h6 class="font-weight-medium">$10</h6>
+                                <!-- <h6 class="font-weight-medium">Kargo</h6>
+                                <h6 class="font-weight-medium">$10</h6> -->
+                                <label for="cargoCompany">Kargo Seçin:</label>
+                                <select id="cargoCompany" class="form-control">
+                                    <option *ngFor="let c of cargoCompanies" [value]="c.name">
+                                        {{c.name}}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                         <div class="pt-2">

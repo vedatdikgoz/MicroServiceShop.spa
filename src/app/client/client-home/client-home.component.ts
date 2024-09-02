@@ -13,6 +13,7 @@ import { catchError, of } from 'rxjs';
   styleUrl: './client-home.component.css'
 })
 export class ClientHomeComponent implements OnInit {
+  isLoggedIn = false;
 
   constructor(private authService: AuthService) 
   { 
@@ -21,7 +22,10 @@ export class ClientHomeComponent implements OnInit {
 
   userInfo:any;
   ngOnInit() {
-    
+    this.isLoggedIn = this.authService.isAuthenticated();
+    this.authService.getIsLoggedIn().subscribe(status => {
+      this.isLoggedIn = status;
+    });
   }
 
   loadUserInfo(): void {
@@ -33,5 +37,9 @@ export class ClientHomeComponent implements OnInit {
     ).subscribe((userInfo: any) => {
       this.userInfo = userInfo;
     });
+  }
+
+  onLogout() {
+    this.authService.logout();
   }
 }

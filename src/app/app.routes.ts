@@ -18,34 +18,35 @@ import { OrderComponent } from './features/order/order.component';
 import { PaymentComponent } from './features/payment/payment.component';
 import { OrderHistoryComponent } from './features/order/order-history/order-history.component';
 import { UserMessageComponent } from './features/user-message/user-message.component';
+import { AuthGuard } from './admin/auth-guard/auth.guard';
 
 
 export const routes: Routes = [
-    { path: '', component: ClientHomeComponent,
-        children: [
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', component: CatalogComponent },
-            { path:'home/category-product/:id', component:ClientCategoryProductComponent },
-            { path:'home/product-detail/:id', component:ClientProductDetailComponent },
-            { path:'auth', component:AuthComponent },
-            { path:'basket', component:BasketComponent},
-            { path:'order', component:OrderComponent},
-            { path:'order/payment', component:PaymentComponent},
-            { path:'orderHistory', component:OrderHistoryComponent}
-          ]
-     },
-    {
-      path: 'admin',component: AdminHomeComponent,
+  { path: '', component: ClientHomeComponent,
       children: [
-        { path: 'category-list', component: CategoryListComponent },
-        { path: 'category-add', component: CategoryAddComponent },
-        { path: 'product-list', component: ProductListComponent },
-        { path: 'product-add', component: ProductAddComponent },
-        { path: "product-list/product-update/:id", component:ProductUpdateComponent },
-        { path: "product-list/product-detail-update/:id", component:ProductDetailUpdateComponent },
-        { path: 'comment-list', component: CommentListComponent},
-        { path: "comment-list/comment-update/:id", component: CommentUpdateComponent},
-        { path: 'message-list', component: UserMessageComponent}
-      ]
-    }
+          { path: '', redirectTo: 'home', pathMatch: 'full' },
+          { path: 'home', component: CatalogComponent },
+          { path:'home/category-product/:id', component:ClientCategoryProductComponent },
+          { path:'home/product-detail/:id', component:ClientProductDetailComponent },
+          { path:'auth', component:AuthComponent },
+          { path:'basket', component:BasketComponent, canActivate: [AuthGuard]},
+          { path:'order', component:OrderComponent, canActivate: [AuthGuard]},
+          { path:'order/payment', component:PaymentComponent, canActivate: [AuthGuard]},
+          { path:'orderHistory', component:OrderHistoryComponent, canActivate: [AuthGuard]}
+        ]
+   },
+  {
+    path: 'admin',component: AdminHomeComponent, canActivate: [AuthGuard],
+    children: [
+      { path: 'category-list', component: CategoryListComponent, canActivate: [AuthGuard] },
+      { path: 'category-add', component: CategoryAddComponent, canActivate: [AuthGuard] },
+      { path: 'product-list', component: ProductListComponent, canActivate: [AuthGuard] },
+      { path: 'product-add', component: ProductAddComponent, canActivate: [AuthGuard] },
+      { path: "product-list/product-update/:id", component:ProductUpdateComponent, canActivate: [AuthGuard] },
+      { path: "product-list/product-detail-update/:id", component:ProductDetailUpdateComponent, canActivate: [AuthGuard] },
+      { path: 'comment-list', component: CommentListComponent, canActivate: [AuthGuard]},
+      { path: "comment-list/comment-update/:id", component: CommentUpdateComponent, canActivate: [AuthGuard]},
+      { path: 'message-list', component: UserMessageComponent, canActivate: [AuthGuard]}
+    ]
+  }
 ];

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RegisterUser } from '../models/auth/registerUser';
-import { catchError, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { LoginUser } from '../models/auth/loginUser';
 import { TokenResponse } from '../models/auth/tokenResponse';
 import {jwtDecode} from 'jwt-decode';
@@ -17,6 +17,12 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient) { }
   
+  private isLoggedIn = new BehaviorSubject<boolean>(this.isAuthenticated());
+
+  // Kullanıcının giriş durumunu almak için
+  getIsLoggedIn() {
+    return this.isLoggedIn.asObservable();
+  }
 
 
   register(user: RegisterUser): Observable<RegisterUser> {
@@ -47,6 +53,7 @@ export class AuthService {
           localStorage.setItem('refresh_token', response.refresh_token);
           localStorage.setItem('expires_in', (response.expires_in).toString());
         }
+        this.isLoggedIn.next(true);
         return response;
       }),
       catchError(error => {
@@ -65,20 +72,25 @@ export class AuthService {
     return null;
   }
 
-  // private clearTokens() {
-  //   localStorage.removeItem('access_token');
-  //   localStorage.removeItem('refresh_token');
-  //   localStorage.removeItem('expires_at');
-  // }
+  logout() {
+    this.clearTokens();
+    this.isLoggedIn.next(false);
+  }
 
-  // isAuthenticated(): boolean {
-  //   const expiresAt = localStorage.getItem('expires_at');
-    
-  //   if (expiresAt) {
-  //     const expiresAtTime = parseInt(expiresAt, 10);
-  //     return new Date().getTime() < expiresAtTime;
-  //   }
-    
-  //   return false;
-  // }
+
+  clearTokens() {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('expires_in');
+  }
+
+
+  isAuthenticated(): boolean {
+    const expiresIn = localStorage.getItem('expires_in');
+    if (expiresIn) {
+      const expiresInTime =new Date().getTime() + parseInt(expiresIn, 10) * 1000;
+      return new Date().getTime() < expiresInTime;
+    } 
+    return false;
+  }
 }

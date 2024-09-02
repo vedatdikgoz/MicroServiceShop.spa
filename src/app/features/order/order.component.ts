@@ -8,6 +8,8 @@ import { BasketService } from '../../services/basket.service';
 import { Basket } from '../../models/basket/basket';
 import { BasketItem } from '../../models/basket/basketItem';
 import { CommonModule } from '@angular/common';
+import { CargoService } from '../../services/cargo.service';
+import { CargoCompany } from '../../models/cargo/cargoCompany';
 
 @Component({
   selector: 'order',
@@ -22,10 +24,12 @@ export class OrderComponent implements OnInit {
   addressAddForm!: FormGroup;
   address!: Address;
   errorMessage: string = '';
+  cargoCompanies: CargoCompany[] = [];
 
   constructor(
     private orderService: OrderService,
     private basketService: BasketService,
+    private cargoService: CargoService,
     private fb: FormBuilder,
     private router: Router) { }
 
@@ -33,6 +37,7 @@ export class OrderComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForm();
     this.loadBasket();
+    this.loadCargoCompanies();
   }
 
 
@@ -86,5 +91,17 @@ export class OrderComponent implements OnInit {
         }
       });
     }
+  }
+
+  loadCargoCompanies(): void {
+    this.cargoService.getCargoCompanies().pipe(
+      catchError((error) => {
+        console.error('Kargo firmaları yüklenirken bir hata oluştu:', error);
+        this.errorMessage = 'Kargo firmaları yüklenirken bir hata oluştu. Lütfen tekrar deneyin.';
+        return of([]);
+      })
+    ).subscribe((cargoCompanies: CargoCompany[]) => {
+      this.cargoCompanies = cargoCompanies;
+    });
   }
 }

@@ -19,13 +19,13 @@
             <tr *ngFor="let p of products">
                 <td>{{ p.name }}</td>
                 <td>{{ p.price}}</td>
-                <td><a class="btn btn-sm btn-info" (click)="openModel(p.id)">Resimler</a></td>
+                <td><a class="btn btn-sm btn-success" (click)="openModel(p.id)"><i class="fa fa-image"></i></a></td>
                 <td><a class="btn btn-secondary btn-sm" [routerLink]="'product-detail-update/' + p.id"
                     routerLinkActive="active">Açıklama ve Bilgi</a></td>
                 <td>{{p.categoryName}}</td>
                 <td><a class="btn btn-warning btn-sm" [routerLink]="'product-update/' + p.id"
                         routerLinkActive="active">Düzenle</a></td>
-                <td><button class="btn btn-danger btn-sm" (click)="deleteProduct(p.id)">Sil</button></td>
+                <td><button class="btn btn-danger btn-sm" (click)="deleteProduct(p.id)"><i class="fa fa-trash"></i></button></td>
             </tr>
         </tbody>
     </table>

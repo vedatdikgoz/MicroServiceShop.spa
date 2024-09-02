@@ -6,7 +6,7 @@ import { Message } from '../../models/userMessage/message';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-user-message',
+  selector: 'user-message',
   standalone: true,
   imports: [],
   templateUrl: './user-message.component.html',

@@ -8,6 +8,7 @@
                 <th>Ürün Adı</th>
                 <th>Fiyat</th>
                 <th>Resimler</th>
+                <th>Çoklu Resim Ekle </th>
                 <th>Açıklama ve Bilgi</th>
                 <th>Kategori</th>
                 <th>Düzenle</th>
@@ -20,12 +21,14 @@
                 <td>{{ p.name }}</td>
                 <td>{{ p.price}}</td>
                 <td><a class="btn btn-sm btn-success" (click)="openModel(p.id)"><i class="fa fa-image"></i></a></td>
+                <td><a class="btn btn-sm btn-info" (click)="openImagesModel(p.id)"><i class="fa fa-pencil"></i></a></td>
                 <td><a class="btn btn-secondary btn-sm" [routerLink]="'product-detail-update/' + p.id"
-                    routerLinkActive="active">Açıklama ve Bilgi</a></td>
+                        routerLinkActive="active">Açıklama ve Bilgi</a></td>
                 <td>{{p.categoryName}}</td>
                 <td><a class="btn btn-warning btn-sm" [routerLink]="'product-update/' + p.id"
                         routerLinkActive="active">Düzenle</a></td>
-                <td><button class="btn btn-danger btn-sm" (click)="deleteProduct(p.id)"><i class="fa fa-trash"></i></button></td>
+                <td><button class="btn btn-danger btn-sm" (click)="deleteProduct(p.id)"><i
+                            class="fa fa-trash"></i></button></td>
             </tr>
         </tbody>
     </table>
@@ -62,6 +65,38 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal" id="myImagesModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" (click)="closeImagesModel()" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="productImagesAddForm" (ngSubmit)="onSubmit()">
+                    <div class="mb-3">
+                        <label for="image1" class="form-label">Resim 1</label>
+                        <input class="form-control" type="file" formControlName="image1" id="image1" (change)="onFileSelected($event, 1)" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="image2" class="form-label">Resim 2</label>
+                        <input class="form-control" type="file" formControlName="image2" id="image2" (change)="onFileSelected($event, 2)" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="image3" class="form-label">Resim 3</label>
+                        <input class="form-control" type="file" formControlName="image3" id="image3" (change)="onFileSelected($event, 3)" >
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Ekle</button>
+                    </div>
+                </form>        
             </div>
         </div>
     </div>

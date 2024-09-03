@@ -51,6 +51,10 @@ export class CatalogService {
     return this.httpClient.post<Product>(`${this.baseUrl}Products`, product)
   }
 
+  addProductImages(productImages: ProductImage): Observable<ProductImage> {
+    return this.httpClient.post<ProductImage>(`${this.baseUrl}ProductImages`, productImages)
+  }
+
   updateProduct(product: Product): Observable<Product> {
     return this.httpClient.put<Product>(`${this.baseUrl}Products`, product);
   }

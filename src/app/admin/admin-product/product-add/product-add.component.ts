@@ -5,7 +5,8 @@ import { CatalogService } from '../../../services/catalog.service';
 import { Router } from '@angular/router';
 import { Product } from '../../../models/catalog/product';
 import { Category } from '../../../models/catalog/category';
-import { catchError, of } from 'rxjs';
+import { catchError, of, switchMap, tap } from 'rxjs';
+import { PhotoService } from '../../../services/photo.service';
 
 @Component({
   selector: 'product-add',
@@ -18,13 +19,15 @@ export class ProductAddComponent implements OnInit {
   productAddForm!: FormGroup;
   categories!: Category[];
   errorMessage: string = '';
+  selectedFile: File | null = null;
+  imageUrl?: string;
 
   constructor(
     private fb: FormBuilder,
     private catalogService: CatalogService,
+    private photoService: PhotoService,
     private router: Router
-  ) 
-  {
+  ) {
     this.loadCategories()
   }
 
@@ -36,7 +39,7 @@ export class ProductAddComponent implements OnInit {
     this.productAddForm = this.fb.group({
       name: ['', Validators.required],
       price: [null, [Validators.required, Validators.min(0)]],
-      imageUrl: [''],
+      imageUrl: [this.imageUrl],
       description: [''],
       categoryId: [null, Validators.required]
     });
@@ -54,24 +57,53 @@ export class ProductAddComponent implements OnInit {
     });
   }
 
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
   onSubmit(): void {
     if (this.productAddForm.valid) {
       // Formdan gelen verileri Product modeline dönüştürme
       const newProduct: Product = this.productAddForm.value;
 
-      this.catalogService.addProduct(newProduct).pipe(
-        catchError((error) => {
-          console.error('Ürün eklenirken bir hata oluştu:', error);
-          return of(null); // Hata durumunda boş bir değer döner
-        })
-      ).subscribe({
-        next: () => {
-          this.router.navigate(['/admin']); // Başarıyla ekleme yapıldıktan sonra yönlendir
-        },
-        error: (error) => {
-          console.error('Ürün eklenirken bir hata oluştu:', error); // Ekstra hata işleme
+      if (this.selectedFile) {
+        this.photoService.uploadPhoto(this.selectedFile)
+          .pipe(
+            tap(response => {
+              newProduct.imageUrl = response.url; // Cloudinary URL'yi product modeline ekle
+            }),
+            switchMap(() => this.catalogService.addProduct(newProduct)), // Upload başarılıysa addProduct'ı çağır
+            catchError((error) => {
+              console.error('Ürün eklenirken bir hata oluştu:', error);
+              return of(null); // Hata durumunda boş bir değer döner
+            })
+          )
+          .subscribe({
+            next: () => {
+              this.router.navigate(['admin/product-list']); // Başarıyla ekleme yapıldıktan sonra yönlendir
+            },
+            error: (error) => {
+              console.error('Ürün eklenirken bir hata oluştu:', error); // Ekstra hata işleme
+            }
+          });
+      } else {
+          // Eğer resim seçilmediyse, sadece addProduct çağır
+           this.catalogService.addProduct(newProduct)
+          .pipe(
+            catchError((error) => {
+              console.error('Ürün eklenirken bir hata oluştu:', error);
+              return of(null);
+            })
+          )
+          .subscribe({
+            next: () => {
+              this.router.navigate(['admin/product-list']);
+            },
+            error: (error) => {
+              console.error('Ürün eklenirken bir hata oluştu:', error);
+            }
+          });
         }
-      });
     }
   }
 }

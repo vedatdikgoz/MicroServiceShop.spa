@@ -21,7 +21,7 @@
           </ul>
         </li>
         <li *ngIf="isLoggedIn" class="nav-item">
-          <a class="nav-link"routerLink="/basket" routerActiveLink="active">Sepet</a>
+          <a class="nav-link" routerLink="/basket" routerActiveLink="active">{{'Sepet'| translate}}</a>
         </li>
         <li *ngIf="isLoggedIn" class="nav-item">
           <a class="nav-link" routerLink="admin" routerLinkActive="active">Admin</a>
@@ -38,14 +38,20 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="/auth" [queryParams]="{ tab: 'login' }">Giriş Yap</a></li>
-            <li><a class="dropdown-item" routerLink="/auth" [queryParams]="{ tab: 'register' }" >Kayıt Ol</a></li>
+            <li><a class="dropdown-item" routerLink="/auth" [queryParams]="{ tab: 'register' }">Kayıt Ol</a></li>
           </ul>
         </li>
         <li *ngIf="isLoggedIn" class="nav-item">
           <a class="nav-link" href="#" (click)="onLogout()">Çıkış Yap</a>
         </li>
       </ul>
+
     </div>
+
+  </div>
+  <div>
+    <button class="btn-lang1 btn-sm btn-light" (click)="ChangeLang($event)" value="tr" (select)="lang==='tr'">TR</button>
+    <button class="btn-lang2 btn-sm btn-light" (click)="ChangeLang($event)" value="en" (select)="lang==='en'">EN</button>
   </div>
 </nav>
 <router-outlet></router-outlet>

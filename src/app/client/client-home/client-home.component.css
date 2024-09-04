@@ -1,0 +1,26 @@
+.btn-lang1 {
+    z-index: 1;
+    position: absolute;
+    right: 100px;
+    top: 20px;
+    background-image: url(https://flagsapi.com/TR/flat/32.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    background-color: #fff;
+    color: transparent;
+  }
+  
+  .btn-lang2 {
+    z-index: 1;
+    position: absolute;
+    right: 135px;
+    top: 20px;
+    background-image: url(https://flagsapi.com/GB/flat/32.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    background-color: #fff;
+    color: transparent;
+  }
+  

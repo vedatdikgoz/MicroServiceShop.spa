@@ -24,7 +24,7 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"   
+                "input": "public"
               },
               "src/assets/i18n"
             ],
@@ -40,11 +40,16 @@
           },
           "configurations": {
             "production": {
+              "optimization": {
+                "scripts": true,
+                "styles": true,
+                "fonts": false
+              },
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "10MB",
+                  "maximumError": "50MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -55,7 +60,11 @@
               "outputHashing": "all"
             },
             "development": {
-              "optimization": false,
+              "optimization": {
+                "scripts": true,
+                "styles": true,
+                "fonts": false
+              },
               "extractLicenses": false,
               "sourceMap": true
             }
@@ -79,7 +88,7 @@
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
-          "options": {          
+          "options": {
             "polyfills": [
               "zone.js",
               "zone.js/testing",

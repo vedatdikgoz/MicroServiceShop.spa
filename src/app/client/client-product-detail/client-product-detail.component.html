@@ -12,14 +12,14 @@
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active" data-bs-interval="10000">
-            <img src={{pi.image1}} class="d-block w-100" alt="...">
+            <img [src]="pi.image1" class="d-block w-100" alt="...">
 
           </div>
           <div class="carousel-item" data-bs-interval="2000">
-            <img src={{pi.image2}} class="d-block w-100" alt="...">
+            <img [src]="pi.image1" class="d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
-            <img src={{pi.image3}} class="d-block w-100" alt="...">
+            <img [src]="pi.image1" class="d-block w-100" alt="...">
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <!-- Ürün Detayları Bölümü -->
+   
     <div class="col-md-7 product-details">
       <h1>Ürün Adı</h1>
       <div class="rating mb-3">
@@ -95,7 +95,7 @@
         </li>
         <li class="nav-item" role="presentation">
           <a class="nav-link" id="tab-pane-3-tab" data-bs-toggle="tab" href="#tab-pane-3" role="tab"
-            aria-controls="tab-pane-3" aria-selected="false">Yorumlar ({{ commentCounter }})</a>
+            aria-controls="tab-pane-3" aria-selected="false">Yorumlar (<span>{{ commentService.commentCounter$ | async }}</span>)</a>
         </li>
       </ul>
       <div class="tab-content" id="myTabContent" *ngIf="productDetail">
@@ -110,13 +110,13 @@
             <div class="col-md-6">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item px-0">...</li>
-                <!-- More list items -->
+              
               </ul>
             </div>
             <div class="col-md-6">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item px-0">...</li>
-                <!-- More list items -->
+                
               </ul>
             </div>
           </div>
@@ -143,7 +143,8 @@
               <form [formGroup]="commentAddForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                   <label for="commentDetail">Yorumunuz *</label>
-                  <textarea id="commentDetail" cols="30" rows="5" class="form-control" formControlName="commentDetail"></textarea>
+                  <textarea id="commentDetail" cols="30" rows="5" class="form-control"
+                    formControlName="commentDetail"></textarea>
                 </div>
                 <div class="form-group">
                   <label for="nameSurname">Adınız *</label>
@@ -159,7 +160,7 @@
                 </div>
                 <div class="form-group">
                   <label for="rating">Puanınız</label>
-                  <input type="number" class="form-control" id="rating" formControlName="rating" >
+                  <input type="number" class="form-control" id="rating" formControlName="rating">
                 </div>
                 <br>
                 <div class="form-group mb-0">

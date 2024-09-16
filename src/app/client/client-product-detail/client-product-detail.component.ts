@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { ProductImage } from '../../models/catalog/productImage';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CatalogService } from '../../services/catalog.service';
-import { catchError, of } from 'rxjs';
+import { catchError, of, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ProductDetail } from '../../models/catalog/productDetail';
 import { CommentService } from '../../services/comment.service';
@@ -26,17 +26,18 @@ export class ClientProductDetailComponent {
   productDetail!: ProductDetail;
   errorMessage: string = '';
   commentAddForm!: FormGroup;
-  commentCounter!: number;
   product!: Product;
   basketItem?: BasketItem;
-
+  commentCounter: number = 0; // Gelen değeri saklayacak değişken
+  
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private catalogService: CatalogService,
-    private commentService: CommentService,
-    private basketService: BasketService) 
+    public commentService: CommentService,
+    private basketService: BasketService,
+    private ngZone: NgZone) 
     { 
       this.productId = this.route.snapshot.paramMap.get('id');
 
@@ -49,8 +50,19 @@ export class ClientProductDetailComponent {
     }
     }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.initializeForm();
+
+    // Start the SignalR connection
+    this.commentService.start();
+
+    this.commentService.commentCounter$.subscribe((count: number) => {
+      // NgZone ile Angular'ın değişiklik algılamasını tetikle
+      this.ngZone.run(() => {
+        this.commentCounter = count;
+      });
+    });
+
   }
 
   loadProductImages(productId: string): void {
@@ -87,7 +99,6 @@ export class ClientProductDetailComponent {
       })
     ).subscribe((productComments: UserComment[]) => {
       this.productComments = productComments;
-      this.commentCounter = productComments.length;
     });
   }
 
@@ -113,7 +124,8 @@ export class ClientProductDetailComponent {
         })
       ).subscribe({
         next: () => {
-          this.router.navigate(['home']);
+          this.router.navigate(['home/product-detail/',this.productId]);
+          this.commentAddForm.reset(); 
         },
         error: (error) => {
           console.error('Yorum eklenirken bir hata oluştu:', error);

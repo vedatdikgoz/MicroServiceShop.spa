@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { Basket } from '../models/basket/basket';
 import { BasketItem } from '../models/basket/basketItem';
 import { jwtDecode } from 'jwt-decode';
@@ -31,7 +31,14 @@ export class BasketService {
             basket.basketItems?.push(basketItem);
           }
         } else {
-          basket = { basketItems: [basketItem] } as Basket;
+          basket = {
+            userId: this.getUserIdFromToken(), 
+            discountCode: "", 
+            discountRate: 0, 
+            totalPrice: basketItem.price, 
+            basketItems: [basketItem]
+        } as Basket;
+          console.log(basket)
         }
         return this.saveOrUpdate(basket);
       }),
@@ -97,8 +104,8 @@ export class BasketService {
         }
   
         // İndirim kodunu ve oranını temizle
-        basket.discountCode = null;
-        basket.discountRate = null;
+        basket.discountCode = "";
+        basket.discountRate = 0;
   
         // Sepeti güncelle
         return this.saveOrUpdate(basket).pipe(
@@ -132,7 +139,7 @@ export class BasketService {
         basket.basketItems?.splice(index, 1);
   
         if (basket.basketItems?.length === 0) {
-          basket.discountCode = null;
+          basket.discountCode = "";
         }
   
         return this.saveOrUpdate(basket);
@@ -144,15 +151,21 @@ export class BasketService {
     );
   }
   
-  get(): Observable<Basket> {
+  get(): Observable<Basket | null> { // Updated return type to allow null
     return this.httpClient.get<{ data: Basket }>(`${this.basketBaseUrl}Baskets`).pipe(
       map(response => response.data),
-      catchError(() => {
-        console.error('Error retrieving basket.');
-        return of();
+      catchError((error) => {
+        // Check if the error is a 404
+        if (error.status === 404) {
+          console.warn('Basket not found, creating a new one.');
+          return of(null); // Return null or an empty basket
+        }
+        console.error('Error retrieving basket.', error);
+        return throwError(() => new Error('Error retrieving basket.'));
       })
     );
   }
+  
   
   
   saveOrUpdate(basket: Basket): Observable<boolean> {
@@ -163,6 +176,11 @@ export class BasketService {
         return of(false); // Hata durumunda false döndür
       })
     );
+  }
+
+
+  deleteBasket(): Observable<boolean> {
+    return this.httpClient.delete<boolean>(`${this.basketBaseUrl}Baskets`);
   }
   
 

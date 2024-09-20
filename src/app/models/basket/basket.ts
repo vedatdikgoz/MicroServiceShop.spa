@@ -2,8 +2,8 @@ import { BasketItem } from "./basketItem";
 
 export class Basket {
   userId!: string
-  discountCode?: string | null
-  discountRate?: number | null
+  discountCode?: string 
+  discountRate?: number 
   totalPrice!: number
   basketItems: BasketItem[] = [];
 

@@ -162,7 +162,7 @@ export class ClientProductDetailComponent {
               return of(); // Sepete eklenemezse null döndür
             })
           ).subscribe({
-            next: () => {         
+            next: () => {        
                console.log('Ürün başarıyla sepete eklendi.');
             },
             error: (error) => {

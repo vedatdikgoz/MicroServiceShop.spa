@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { catchError, of } from 'rxjs';
+import { catchError, lastValueFrom, of } from 'rxjs';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Address } from '../../models/order/address';
 import { BasketService } from '../../services/basket.service';
@@ -10,6 +10,12 @@ import { BasketItem } from '../../models/basket/basketItem';
 import { CommonModule } from '@angular/common';
 import { CargoService } from '../../services/cargo.service';
 import { CargoCompany } from '../../models/cargo/cargoCompany';
+import { OrderCreateInput } from '../../models/order/orderCreateInput';
+import { OrderItemCreateInput } from '../../models/order/orderItemCreateInput';
+import { PaymentService } from '../../services/payment.service';
+import { PaymentInfoInput } from '../../models/payment/paymentInfoInput';
+import { AuthService } from '../../services/auth.service';
+import { CheckoutInfoInput } from '../../models/order/checkoutInfoInput';
 
 @Component({
   selector: 'order',
@@ -21,7 +27,7 @@ import { CargoCompany } from '../../models/cargo/cargoCompany';
 export class OrderComponent implements OnInit {
   basket = new Basket();
   basketItems: BasketItem[] = [];
-  addressAddForm!: FormGroup;
+  orderCreateForm!: FormGroup;
   address!: Address;
   errorMessage: string = '';
   cargoCompanies: CargoCompany[] = [];
@@ -30,6 +36,8 @@ export class OrderComponent implements OnInit {
     private orderService: OrderService,
     private basketService: BasketService,
     private cargoService: CargoService,
+    private paymentService: PaymentService,
+    private authService: AuthService,
     private fb: FormBuilder,
     private router: Router) { }
 
@@ -43,55 +51,57 @@ export class OrderComponent implements OnInit {
 
   loadBasket(): void {
     this.basketService.get().subscribe({
-      next: (basket: Basket) => {
+      next: (basket: Basket | null) => { // Update the type here to handle null
         if (basket) {
           this.basket = basket;
           this.basketItems = (basket.basketItems || []).map(item => Object.assign(new BasketItem(), item));
-        } 
+        } else {
+          // Handle the case where the basket is null
+          console.warn('No basket found. Initializing a new basket.');
+          this.basket = new Basket(); 
+          this.basketItems = [];
+        }
       },
       error: (error) => {
-        console.error('Sepet verisini alırken bir hata oluştu:', error);
+        console.error('Error occurred while fetching the basket:', error);
       }
     });
   }
+  
 
 
   initializeForm(): void {
-    this.addressAddForm = this.fb.group({
-      userId: ['', Validators.required],
-      name: [''],
-      surname: [''],
-      email: [''],
-      phone: [''],
+    this.orderCreateForm = this.fb.group({
       country: [''],
       province: [''],
       district: [''],
-      adressLine: [''],
-      adressLine2: [''],
-      zipCode: ['']
+      addressLine: [''],
+      zipCode: [''],
+      cardName: [''],
+      cardNumber: [''],
+      expiration: [''],
+      cvv: [''],
     });
   }
 
   onSubmit(): void {
-    if (this.addressAddForm.valid) {
-      // Formdan gelen verileri Order modeline dönüştürme
-      const newAddress: Address = this.addressAddForm.value;
-
-      this.orderService.addAddress(newAddress).pipe(
-        catchError((error) => {
-          console.error('Sipariş eklenirken bir hata oluştu:', error);
-          return of(null); // Hata durumunda boş bir değer döner
-        })
-      ).subscribe({
-        next: () => {
-          this.router.navigate(['']); // Başarıyla ekleme yapıldıktan sonra yönlendir
-        },
-        error: (error: any) => {
-          console.error('Sipariş eklenirken bir hata oluştu:', error); // Ekstra hata işleme
-        }
-      });
+    if (this.orderCreateForm.invalid) {
+      return; // Eğer form geçersizse işleme devam etme.
     }
+  
+    const checkoutInfoInput: CheckoutInfoInput = this.orderCreateForm.value;
+  
+    this.suspendOrder(checkoutInfoInput).then((result) => {
+      if (result) {
+        // İşlem başarılı olduğunda yapılacak işlemler (örn. bildirim gösterme, yönlendirme).
+        console.log('Order suspended successfully');
+      } else {
+        // Ödeme başarısız olursa yapılacak işlemler.
+        console.error('Payment failed');
+      }
+    });
   }
+  
 
   loadCargoCompanies(): void {
     this.cargoService.getCargoCompanies().pipe(
@@ -104,4 +114,54 @@ export class OrderComponent implements OnInit {
       this.cargoCompanies = cargoCompanies;
     });
   }
+
+
+  async suspendOrder(checkoutInfoInput: CheckoutInfoInput): Promise<boolean> {
+    // Use `lastValueFrom` to handle Observables.
+    const basket = await lastValueFrom(this.basketService.get());
+  
+    const orderCreateInput: OrderCreateInput = {
+      buyerId: this.authService.getUserIdFromToken() ?? undefined,
+      address: {
+        country: checkoutInfoInput.country,
+        province: checkoutInfoInput.province,
+        district: checkoutInfoInput.district,
+        addressLine: checkoutInfoInput.addressLine,
+        zipCode: checkoutInfoInput.zipCode,
+      },
+      orderItems: [],
+    };
+  
+    basket!.basketItems.forEach((x) => {
+      const orderItem: OrderItemCreateInput = {
+        productId: x.productId,
+        price: x.price,
+        pictureUrl: '',
+        productName: x.productName,
+      };
+      orderCreateInput.orderItems.push(orderItem);
+    });
+  
+    const paymentInfoInput: PaymentInfoInput = {
+      cardName: checkoutInfoInput.cardName,
+      cardNumber: checkoutInfoInput.cardNumber,
+      expiration: checkoutInfoInput.expiration,
+      cvv: checkoutInfoInput.cvv,
+      totalPrice: basket!.totalPrice,
+      orderCreateInput: orderCreateInput,
+    };
+  
+    // Use `lastValueFrom` to handle Observables for payment service.
+    const responsePayment = await lastValueFrom(this.paymentService.receivePayment(paymentInfoInput));
+  
+    if (!responsePayment) {
+      return false;
+    }
+  
+    // Use `lastValueFrom` to handle delete basket.
+    await lastValueFrom(this.basketService.deleteBasket());
+    return true;
+  }
+  
+
 }

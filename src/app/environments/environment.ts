@@ -9,5 +9,6 @@ export const environment = {
     commentPath: 'services/comment/',
     messagePath: 'services/message/',
     cargoPath: 'services/cargo/',
-    photoPath: 'services/photo/'
+    photoPath: 'services/photo/',
+    paymentPath: 'services/payment/'
   };

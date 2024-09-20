@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
-import { Address } from '../models/order/address';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Order } from '../models/order/order';
+import { CheckoutInfoInput } from '../models/order/checkoutInfoInput';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +14,14 @@ export class OrderService {
 
   private baseUrl = `${environment.gatewayBaseUri}/${environment.orderPath}`;
 
-  addAddress(address: Address): Observable<Address> {
-    return this.httpClient.post<Address>(`${this.baseUrl}Addresses`, address)
-  }
 
   getOrders(userId: string): Observable<Order[]> {
     return this.httpClient.get<{ data: Order[] }>(`${this.baseUrl}Orders/user=${userId}`)
       .pipe(map(response => response.data))
+  }
+
+
+  createOrder(checkoutInfoInput: CheckoutInfoInput): Observable<CheckoutInfoInput> {
+    return this.httpClient.post<CheckoutInfoInput>(`${this.baseUrl}Orders`, checkoutInfoInput)
   }
 }

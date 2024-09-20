@@ -44,18 +44,19 @@ export class BasketComponent implements OnInit {
 
   loadBasket(): void {
     this.basketService.get().subscribe({
-      next: (basket: Basket) => {
+      next: (basket: Basket | null) => { // Update the type here to handle null
         if (basket) {
           this.basket = basket;
           this.basketItems = (basket.basketItems || []).map(item => Object.assign(new BasketItem(), item));
         } else {
-          // Eğer basket undefined ise, boş bir sepet ve basketItems oluştur.
-          this.basket = new Basket();
+          // Handle the case where the basket is null
+          console.warn('No basket found. Initializing a new basket.');
+          this.basket = new Basket(); 
           this.basketItems = [];
         }
       },
       error: (error) => {
-        console.error('Sepet verisini alırken bir hata oluştu:', error);
+        console.error('Error occurred while fetching the basket:', error);
       }
     });
   }

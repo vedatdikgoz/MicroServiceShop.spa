@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../services/order.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { catchError, lastValueFrom, of } from 'rxjs';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Address } from '../../models/order/address';
@@ -20,7 +20,7 @@ import { CheckoutInfoInput } from '../../models/order/checkoutInfoInput';
 @Component({
   selector: 'order',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive, ReactiveFormsModule],
   templateUrl: './order.component.html',
   styleUrl: './order.component.css'
 })
@@ -31,6 +31,8 @@ export class OrderComponent implements OnInit {
   address!: Address;
   errorMessage: string = '';
   cargoCompanies: CargoCompany[] = [];
+  selectedPaymentMethod: string = '';  // Seçilen ödeme yöntemi
+  showCardDetails: boolean = false;    // Kart bilgileri formunu gösterme
 
   constructor(
     private orderService: OrderService,
@@ -48,6 +50,15 @@ export class OrderComponent implements OnInit {
     this.loadCargoCompanies();
   }
 
+
+  onPaymentMethodChange(method: string) {
+    this.selectedPaymentMethod = method;
+    if (method === 'banktransfer') {
+      this.showCardDetails = true;     // Banka/Kredi Kartı seçildiyse kart bilgilerini göster
+    } else {
+      this.showCardDetails = false;    // Diğer durumlarda kart bilgilerini gizle
+    }
+  }
 
   loadBasket(): void {
     this.basketService.get().subscribe({
@@ -88,7 +99,6 @@ export class OrderComponent implements OnInit {
     if (this.orderCreateForm.invalid) {
       return; // Eğer form geçersizse işleme devam etme.
     }
-  
     const checkoutInfoInput: CheckoutInfoInput = this.orderCreateForm.value;
   
     this.suspendOrder(checkoutInfoInput).then((result) => {
@@ -148,12 +158,12 @@ export class OrderComponent implements OnInit {
       expiration: checkoutInfoInput.expiration,
       cvv: checkoutInfoInput.cvv,
       totalPrice: basket!.totalPrice,
-      orderCreateInput: orderCreateInput,
+      order: orderCreateInput,
     };
   
     // Use `lastValueFrom` to handle Observables for payment service.
+    console.log(paymentInfoInput)
     const responsePayment = await lastValueFrom(this.paymentService.receivePayment(paymentInfoInput));
-  
     if (!responsePayment) {
       return false;
     }

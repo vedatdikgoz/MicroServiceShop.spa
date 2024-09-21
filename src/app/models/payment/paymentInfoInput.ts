@@ -6,5 +6,5 @@ export class PaymentInfoInput {
     expiration?: string
     cvv?: string
     totalPrice?: number
-    orderCreateInput?:OrderCreateInput 
+    order?:OrderCreateInput 
 }

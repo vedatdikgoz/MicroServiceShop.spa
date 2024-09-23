@@ -19,6 +19,7 @@ import { PaymentComponent } from './features/payment/payment.component';
 import { OrderHistoryComponent } from './features/order/order-history/order-history.component';
 import { UserMessageComponent } from './features/user-message/user-message.component';
 import { AuthGuard } from './admin/auth-guard/auth.guard';
+import { CheckoutComponent } from './features/order/checkout/checkout.component';
 
 
 export const routes: Routes = [
@@ -32,7 +33,8 @@ export const routes: Routes = [
           { path:'basket', component:BasketComponent, canActivate: [AuthGuard]},
           { path:'order', component:OrderComponent, canActivate: [AuthGuard]},
           { path:'order/payment', component:PaymentComponent, canActivate: [AuthGuard]},
-          { path:'orderHistory', component:OrderHistoryComponent, canActivate: [AuthGuard]}
+          { path:'orderHistory', component:OrderHistoryComponent, canActivate: [AuthGuard]},
+          { path:'checkout', component:CheckoutComponent, canActivate: [AuthGuard]}
         ]
    },
   {

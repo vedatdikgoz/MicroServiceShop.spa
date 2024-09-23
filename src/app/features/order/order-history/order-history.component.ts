@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Order } from '../../../models/order/order';
-import { catchError, firstValueFrom, of, switchMap, tap } from 'rxjs';
+import { catchError, firstValueFrom, of, tap } from 'rxjs';
 import { OrderService } from '../../../services/order.service';
 import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { OrderCreateInput } from '../../../models/order/orderCreateInput';
 
 @Component({
   selector: 'order-history',
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './order-history.component.css'
 })
 export class OrderHistoryComponent implements OnInit {
-  orders: Order[] = [];
+  orders: OrderCreateInput[] = [];
   errorMessage: string = '';
   userInfo:any;
 
@@ -26,21 +26,21 @@ export class OrderHistoryComponent implements OnInit {
     try {
       await this.loadUserInfo();
       if (this.userInfo) {
-        this.loadOrders(this.userInfo.id);
+        this.loadOrders();
       }
     } catch (error) {
       console.error('Error loading user info or orders', error);
     }
   }
 
-  loadOrders(userId: string): void {
-    this.orderService.getOrders(userId).pipe(
+  loadOrders(): void {
+    this.orderService.getOrders().pipe(
       catchError((error) => {
         console.error('Sipariş geçimişi yüklenirken bir hata oluştu:', error);
         this.errorMessage = 'Sipariş geçimişi yüklenirken bir hata oluştu. Lütfen tekrar deneyin.';
         return of([]);
       })
-    ).subscribe((orders: Order[]) => {
+    ).subscribe((orders: OrderCreateInput[]) => {
       this.orders = orders;
       
     });

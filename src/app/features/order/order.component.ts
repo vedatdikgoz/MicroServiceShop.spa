@@ -170,6 +170,8 @@ export class OrderComponent implements OnInit {
   
     // Use `lastValueFrom` to handle delete basket.
     await lastValueFrom(this.basketService.deleteBasket());
+    this.orderCreateForm.reset();
+    this.router.navigate(['checkout']);
     return true;
   }
   

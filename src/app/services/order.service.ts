@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Order } from '../models/order/order';
 import { CheckoutInfoInput } from '../models/order/checkoutInfoInput';
+import { OrderCreateInput } from '../models/order/orderCreateInput';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,8 @@ export class OrderService {
   private baseUrl = `${environment.gatewayBaseUri}/${environment.orderPath}`;
 
 
-  getOrders(userId: string): Observable<Order[]> {
-    return this.httpClient.get<{ data: Order[] }>(`${this.baseUrl}Orders/user=${userId}`)
+  getOrders(): Observable<OrderCreateInput[]> {
+    return this.httpClient.get<{ data: OrderCreateInput[] }>(`${this.baseUrl}Orders`)
       .pipe(map(response => response.data))
   }
 

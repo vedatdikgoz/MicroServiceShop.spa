@@ -6,6 +6,7 @@ import { LoginUser } from '../models/auth/loginUser';
 import { TokenResponse } from '../models/auth/tokenResponse';
 import {jwtDecode} from 'jwt-decode';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,23 +15,23 @@ export class AuthService {
   tokenUrl = 'http://localhost:5001/connect/token';
   private clientId = 'AdminClient';
   private clientSecret = 'microserviceshopsecret';
+  private tokenExpirationTimeout: any;
 
   constructor(private httpClient: HttpClient) { }
   
   private isLoggedIn = new BehaviorSubject<boolean>(this.isAuthenticated());
 
-  // Kullanıcının giriş durumunu almak için
   getIsLoggedIn() {
     return this.isLoggedIn.asObservable();
   }
 
-
   register(user: RegisterUser): Observable<RegisterUser> {
-    return this.httpClient.post<RegisterUser>(this.path + "Users/Register", user)
+    console.log('Kayıt için gönderilen kullanıcı:', user);
+    return this.httpClient.post<RegisterUser>(`${this.path}Users/Register`, user);
   }
 
   getUserInfo():Observable<any> {
-    return this.httpClient.get<any>(this.path + "Users/GetUserInfo")
+    return this.httpClient.get<any>(`${this.path}Users/GetUserInfo`);
   }
 
   login(loginUser: LoginUser): Observable<any> {
@@ -52,6 +53,9 @@ export class AuthService {
           localStorage.setItem('access_token', response.access_token);
           localStorage.setItem('refresh_token', response.refresh_token);
           localStorage.setItem('expires_in', (response.expires_in).toString());
+
+          // Token süresi sonunda logout yapılacak
+          this.scheduleLogout(response.expires_in);
         }
         this.isLoggedIn.next(true);
         return response;
@@ -75,15 +79,17 @@ export class AuthService {
   logout() {
     this.clearTokens();
     this.isLoggedIn.next(false);
-  }
 
+    if (this.tokenExpirationTimeout) {
+      clearTimeout(this.tokenExpirationTimeout);
+    }
+  }
 
   clearTokens() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('expires_in');
   }
-
 
   isAuthenticated(): boolean {
     const expiresIn = localStorage.getItem('expires_in');
@@ -92,5 +98,21 @@ export class AuthService {
       return new Date().getTime() < expiresInTime;
     } 
     return false;
+  }
+
+  // Token süresi dolduğunda otomatik logout yapılması için zamanlayıcı ayarla
+  private scheduleLogout(expiresIn: number) {
+    const expiresInMilliseconds = expiresIn * 1000;
+
+    // Eğer eski bir zamanlayıcı varsa, temizle
+    if (this.tokenExpirationTimeout) {
+      clearTimeout(this.tokenExpirationTimeout);
+    }
+
+    // expires_in süresi dolduğunda logout çağır
+    this.tokenExpirationTimeout = setTimeout(() => {
+      this.logout();
+      console.log('Token süresi doldu, otomatik çıkış yapıldı.');
+    }, expiresInMilliseconds);
   }
 }

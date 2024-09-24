@@ -8,11 +8,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Anasayfa</a>
+          <a class="nav-link active" aria-current="page" href="#">{{'Anasayfa'| translate}}</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Kategoriler
+            {{'Kategoriler'| translate}}
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Mobilyalar</a></li>
@@ -27,22 +27,22 @@
           <a class="nav-link" routerLink="admin" routerLinkActive="active">Admin</a>
         </li>
         <li *ngIf="isLoggedIn" class="nav-item">
-          <a class="nav-link" routerLink="orderHistory" routerLinkActive="active">Sipariş Geçmişi</a>
+          <a class="nav-link" routerLink="orderHistory" routerLinkActive="active">{{'Sipariş Geçmişi'| translate}}</a>
         </li>
       </ul>
 
       <ul class="navbar-nav">
         <li *ngIf="!isLoggedIn" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-user"></i> Giriş Yap
+            <i class="fa fa-user"></i> {{'Giriş Yap'| translate}}
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="/auth" [queryParams]="{ tab: 'login' }">Giriş Yap</a></li>
-            <li><a class="dropdown-item" routerLink="/auth" [queryParams]="{ tab: 'register' }">Kayıt Ol</a></li>
+            <li><a class="dropdown-item" routerLink="/auth" [queryParams]="{ tab: 'login' }">{{'Giriş Yap'| translate}}</a></li>
+            <li><a class="dropdown-item" routerLink="/auth" [queryParams]="{ tab: 'register' }">{{'Kayıt Ol'| translate}}</a></li>
           </ul>
         </li>
         <li *ngIf="isLoggedIn" class="nav-item">
-          <a class="nav-link" href="#" (click)="onLogout()">Çıkış Yap</a>
+          <a class="nav-link" href="#" (click)="onLogout()">{{'Çıkış Yap'| translate}}</a>
         </li>
       </ul>
 

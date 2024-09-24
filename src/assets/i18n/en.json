@@ -1,3 +1,14 @@
 {
-    "Sepet":"Basket"
+    "Sepet":"Basket",
+    "Sipariş Geçmişi":"Order History",
+    "Kategoriler":"Categories",
+    "Anasayfa":"Home",
+    "Giriş Yap":"Login",
+    "Kayıt Ol":"Sign Up",
+    "Çıkış Yap":"Logout",
+    "Kategori Ekle":"Add Category",
+    "Ürünler":"Products",
+    "Ürün Ekle":"Add Product",
+    "Yorumlar":"Comments",
+    "Gelen Mesajlar":"Inbox Messages"
 }

@@ -1,3 +1,15 @@
 {
-    "Sepet":"Sepet"
+    "Sepet":"Sepet",
+    "Sipariş Geçmişi":"Sipariş Geçmişi",
+    "Kategoriler":"Kategoriler",
+    "Anasayfa":"Anasayfa",
+    "Giriş Yap":"Giriş Yap",
+    "Kayıt Ol":"Kayıt Ol",
+    "Çıkış Yap":"Çıkış Yap",
+    "Kategori Ekle":"Kategori Ekle",
+    "Ürünler":"Ürünler",
+    "Ürün Ekle":"Ürün Ekle",
+    "Yorumlar":"Yorumlar",
+    "Gelen Mesajlar":"Gelen Mesajlar"
+
 }

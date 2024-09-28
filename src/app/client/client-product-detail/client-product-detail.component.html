@@ -34,12 +34,12 @@
     </div>
 
    
-    <div class="col-md-7 product-details">
-      <h1>Ürün Adı</h1>
+    <div class="col-md-7 product-details" *ngIf="product">
+      <h1>{{product.name}}</h1>
       <div class="rating mb-3">
-        <span class="badge badge-warning" style="color: brown;">4.5/5</span>
+        <span class="badge badge-warning" style="color: brown;">4/5</span>
       </div>
-      <h4>Fiyat: 1000 TL</h4>
+      <h4>Fiyat: {{product.price}} TL</h4>
       <div class="form-group">
         <label for="size">Boyut:</label>
         <select class="form-control" id="size">

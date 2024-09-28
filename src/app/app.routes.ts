@@ -20,6 +20,7 @@ import { OrderHistoryComponent } from './features/order/order-history/order-hist
 import { UserMessageComponent } from './features/user-message/user-message.component';
 import { AuthGuard } from './admin/auth-guard/auth.guard';
 import { CheckoutComponent } from './features/order/checkout/checkout.component';
+import { CategoryProductListComponent } from './admin/admin-category/category-list/category-product-list/category-product-list.component';
 
 
 export const routes: Routes = [
@@ -42,6 +43,7 @@ export const routes: Routes = [
     children: [
       { path: 'category-list', component: CategoryListComponent, canActivate: [AuthGuard] },
       { path: 'category-add', component: CategoryAddComponent, canActivate: [AuthGuard] },
+      { path: "category-list/category-product-list/:id", component:CategoryProductListComponent, canActivate: [AuthGuard] },
       { path: 'product-list', component: ProductListComponent, canActivate: [AuthGuard] },
       { path: 'product-add', component: ProductAddComponent, canActivate: [AuthGuard] },
       { path: "product-list/product-update/:id", component:ProductUpdateComponent, canActivate: [AuthGuard] },

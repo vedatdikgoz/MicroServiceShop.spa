@@ -3,24 +3,29 @@ import { Component } from '@angular/core';
 import { CatalogService } from '../../../services/catalog.service';
 import { Category } from '../../../models/catalog/category';
 import { catchError, of } from 'rxjs';
+import { Product } from '../../../models/catalog/product';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'category-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css'
 })
 export class CategoryListComponent {
+
+  categories!: Category[];
+  errorMessage: string = '';
+  categoryId: string | null = null;
+  products: Product[] = [];
+
   constructor(private catalogService: CatalogService) 
   {
     this.loadCategories();
   }
-  categories!: Category[];
-  errorMessage: string = '';
 
   ngOnInit() {
-
   }
 
   loadCategories(): void {

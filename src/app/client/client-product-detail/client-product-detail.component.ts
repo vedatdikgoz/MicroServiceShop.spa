@@ -27,6 +27,7 @@ export class ClientProductDetailComponent {
   errorMessage: string = '';
   commentAddForm!: FormGroup;
   product!: Product;
+  basketProduct!:Product;
   basketItem?: BasketItem;
   commentCounter: number = 0; // Gelen değeri saklayacak değişken
   
@@ -45,6 +46,7 @@ export class ClientProductDetailComponent {
       this.loadProductImages(this.productId);
       this.loadProductDetail(this.productId);
       this.loadProductComments(this.productId);
+      this.loadProduct(this.productId);
     } else {
       this.errorMessage = 'Product ID bulunamadı.';
     }
@@ -86,6 +88,19 @@ export class ClientProductDetailComponent {
       })
     ).subscribe((response: any) => {
       this.productDetail = response.data;
+    });
+  }
+
+  loadProduct(productId: string): void {
+    this.catalogService.getProductById(productId).pipe(
+      catchError((error) => {
+        console.error('Ürün yüklenirken bir hata oluştu:', error);
+        this.errorMessage = 'Ürün yüklenirken bir hata oluştu. Lütfen tekrar deneyin.';
+        return of("");
+      })
+    ).subscribe((response: any) => {
+      this.product = response.data;
+      console.log(this.product)
     });
   }
 
@@ -145,13 +160,13 @@ export class ClientProductDetailComponent {
     ).subscribe({
       next: (response: any) => {
         if (response && response.data) {
-          this.product = response.data;
+          this.basketProduct = response.data;
   
           this.basketItem = {
-            productId: this.product.id, 
-            productName: this.product.name,
-            imageUrl:this.product.imageUrl,
-            price: this.product.price ?? 0,
+            productId: this.basketProduct.id, 
+            productName: this.basketProduct.name,
+            imageUrl:this.basketProduct.imageUrl,
+            price: this.basketProduct.price ?? 0,
             quantity: 1
           };
   

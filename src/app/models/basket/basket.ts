@@ -6,5 +6,4 @@ export class Basket {
   discountRate?: number 
   totalPrice!: number
   basketItems: BasketItem[] = [];
-
 }

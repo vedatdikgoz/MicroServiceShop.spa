@@ -67,6 +67,7 @@ export class BasketComponent implements OnInit {
     this.basketService.applyDiscount(this.discountCode).subscribe((result) => {  
       if (result) {
         this.isDiscountApplied = true;
+
         console.log('Discount applied successfully');
       } else {
         this.isDiscountApplied = false;

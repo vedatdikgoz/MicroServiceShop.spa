@@ -17,7 +17,7 @@ export class BasketService {
   constructor(private httpClient: HttpClient) { }
 
 
-  
+
 
   addBasketItem(basketItem: BasketItem): Observable<boolean> {
     return this.get().pipe(
@@ -26,25 +26,25 @@ export class BasketService {
           const itemExists = basket.basketItems?.some(
             (x) => x.productId === basketItem.productId
           );
-  
+
           if (!itemExists) {
             basket.basketItems?.push(basketItem);
           }
         } else {
           basket = {
-            userId: this.getUserIdFromToken(), 
-            discountCode: "", 
-            discountRate: 0, 
-            totalPrice: basketItem.price, 
+            userId: this.getUserIdFromToken(),
+            discountCode: "",
+            discountRate: 0,
+            totalPrice: basketItem.price,
             basketItems: [basketItem]
-        } as Basket;
+          } as Basket;
           console.log(basket)
         }
         return this.saveOrUpdate(basket);
       }),
       catchError((error) => {
         console.error('Add Basket Item error:', error);
-        return of(); 
+        return of();
       })
     );
   }
@@ -58,21 +58,21 @@ export class BasketService {
           console.error('Basket not found.');
           return of();
         }
-  
+
         return this.httpClient.get<any>(`${this.discountBaseUrl}discounts/getbycode/${discountCode}`).pipe(
           switchMap((response) => {
             const discount = response?.data;
-  
+
             if (!discount) {
               console.log('Discount not found.');
-              return of(); 
+              return of();
             }
-  
+
             basket.discountCode = discount.code;
             basket.discountRate = discount.rate;
-            
+
             return this.saveOrUpdate(basket);
-            
+
           }),
           tap((isSuccessful) => {
             if (isSuccessful) {
@@ -83,18 +83,18 @@ export class BasketService {
           }),
           catchError((error) => {
             console.error('Discount apply error:', error);
-            return of(); 
+            return of();
           })
         );
       }),
       catchError((error) => {
         console.error('Apply discount process error:', error);
-        return of(); 
+        return of();
       })
     );
   }
 
-  
+
   cancelApplyDiscount(): Observable<boolean> {
     return this.get().pipe(
       switchMap((basket) => {
@@ -102,11 +102,11 @@ export class BasketService {
           // Sepet bulunamazsa veya indirim kodu yoksa false döndür
           return of(false);
         }
-  
+
         // İndirim kodunu ve oranını temizle
         basket.discountCode = "";
         basket.discountRate = 0;
-  
+
         // Sepeti güncelle
         return this.saveOrUpdate(basket).pipe(
           map((isSuccessful) => {
@@ -123,34 +123,34 @@ export class BasketService {
   }
 
 
-  
+
   removeBasketItem(productId: string): Observable<boolean> {
     return this.get().pipe(
       switchMap((basket) => {
         if (!basket) {
           return of();
         }
-  
+
         const index = basket.basketItems?.findIndex((x) => x.productId === productId);
         if (index === -1 || index === undefined) {
           return of();
         }
-  
+
         basket.basketItems?.splice(index, 1);
-  
+
         if (basket.basketItems?.length === 0) {
           basket.discountCode = "";
         }
-  
+
         return this.saveOrUpdate(basket);
       }),
       catchError((error) => {
         console.error('Remove Basket Item error:', error);
-        return of(); 
+        return of();
       })
     );
   }
-  
+
   get(): Observable<Basket | null> { // Updated return type to allow null
     return this.httpClient.get<{ data: Basket }>(`${this.basketBaseUrl}Baskets`).pipe(
       map(response => response.data),
@@ -165,9 +165,9 @@ export class BasketService {
       })
     );
   }
-  
-  
-  
+
+
+
   saveOrUpdate(basket: Basket): Observable<boolean> {
     return this.httpClient.post<Basket>(`${this.basketBaseUrl}Baskets`, basket).pipe(
       map(() => true), // Başarı durumunda true döndür
@@ -182,7 +182,7 @@ export class BasketService {
   deleteBasket(): Observable<boolean> {
     return this.httpClient.delete<boolean>(`${this.basketBaseUrl}Baskets`);
   }
-  
+
 
   getUserIdFromToken(): string | null {
     const token = localStorage.getItem('access_token');

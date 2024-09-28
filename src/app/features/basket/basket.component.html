@@ -75,7 +75,7 @@
                 <div class="pt-2">
                     <div class="d-flex justify-content-between mt-2">
                         <h5>Sepet Tutarı</h5>
-                        {{ isDiscountApplied ? basket.totalPrice - (basket.totalPrice * (basket.discountRate! / 100)) : basket.totalPrice }}
+                        {{ basket.totalPrice }}
                     </div>
                     <button class="btn btn-block btn-primary font-weight-bold my-3 py-3" routerLink="/order" routerLinkActive="active">Ödeme İşlemi</button>
                 </div>

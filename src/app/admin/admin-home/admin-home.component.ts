@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthService } from '../../services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-admin-home',
@@ -10,6 +12,15 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './admin-home.component.html',
   styleUrl: './admin-home.component.css'
 })
-export class AdminHomeComponent {
+export class AdminHomeComponent implements OnInit {
+  userInfo$: Observable<any>;
 
+  constructor(private authService: AuthService){
+    
+    this.userInfo$ = this.authService.getUserInfo();
+  }
+
+  ngOnInit(): void {
+  }
+ 
 }

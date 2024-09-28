@@ -78,6 +78,7 @@ export class ProductListComponent implements OnInit {
         )
         .subscribe({
           next: () => {
+            this.productImagesAddForm.reset()
             this.router.navigate(['admin/product-list']); // Başarıyla ekleme yapıldıktan sonra yönlendir
           },
           error: (error) => {

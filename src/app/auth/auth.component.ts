@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { RegisterUser } from '../models/auth/registerUser';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'auth',
@@ -23,7 +24,8 @@ export class AuthComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private toastr: ToastrService) {
     this.route.queryParams.subscribe(params => {
       this.activeTab = params['tab'] || 'login';
     });
@@ -83,6 +85,7 @@ export class AuthComponent implements OnInit {
             } else {
               this.isSubmitting = false;
               this.errorMessage = 'Authentication failed. Please try again.';
+              this.toastr.error('Kullanıcı adı veya şifre hatalı', 'Hata');
             }
           },
           error: err => {

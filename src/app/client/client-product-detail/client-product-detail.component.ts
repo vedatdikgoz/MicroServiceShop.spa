@@ -11,6 +11,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Product } from '../../models/catalog/product';
 import { BasketItem } from '../../models/basket/basketItem';
 import { BasketService } from '../../services/basket.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'client-product-detail',
@@ -38,7 +40,8 @@ export class ClientProductDetailComponent {
     private catalogService: CatalogService,
     public commentService: CommentService,
     private basketService: BasketService,
-    private ngZone: NgZone) 
+    private ngZone: NgZone,
+    private toastr: ToastrService) 
     { 
       this.productId = this.route.snapshot.paramMap.get('id');
 
@@ -178,7 +181,8 @@ export class ClientProductDetailComponent {
             })
           ).subscribe({
             next: () => {        
-               console.log('Ürün başarıyla sepete eklendi.');
+               console.log('Ürün sepete eklendi.');
+               this.toastr.success('Ürün sepete eklendi.', 'Başarılı');
             },
             error: (error) => {
               console.error('Sepet güncellenirken hata oluştu:', error);

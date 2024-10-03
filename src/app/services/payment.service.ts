@@ -15,17 +15,8 @@ export class PaymentService {
 
   private baseUrl = `${environment.gatewayBaseUri}/${environment.paymentPath}`;
 
-  // receivePayment(paymentInfoInput: PaymentInfoInput): Observable<PaymentInfoInput> {
-  //   return this.httpClient.post<PaymentInfoInput>(`${this.baseUrl}Payments`, paymentInfoInput)
-  // }
-
   receivePayment(paymentInfoInput: PaymentInfoInput): Observable<PaymentInfoInput> {
-    console.log('Giden İstek:', paymentInfoInput);
-  
-    return this.httpClient.post<PaymentInfoInput>(`${this.baseUrl}Payments`, paymentInfoInput).pipe(
-      tap(response => {
-        console.log('Gelen Yanıt:', response);
-      })
-    );
+    return this.httpClient.post<PaymentInfoInput>(`${this.baseUrl}Payments`, paymentInfoInput)
   }
+
 }

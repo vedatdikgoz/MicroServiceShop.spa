@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderService } from '../../services/order.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { catchError, lastValueFrom, of } from 'rxjs';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { Address } from '../../models/order/address';
 import { BasketService } from '../../services/basket.service';
 import { Basket } from '../../models/basket/basket';
 import { BasketItem } from '../../models/basket/basketItem';
@@ -28,14 +26,12 @@ export class OrderComponent implements OnInit {
   basket = new Basket();
   basketItems: BasketItem[] = [];
   orderCreateForm!: FormGroup;
-  address!: Address;
   errorMessage: string = '';
   cargoCompanies: CargoCompany[] = [];
   selectedPaymentMethod: string = '';  // Seçilen ödeme yöntemi
   showCardDetails: boolean = false;    // Kart bilgileri formunu gösterme
 
   constructor(
-    private orderService: OrderService,
     private basketService: BasketService,
     private cargoService: CargoService,
     private paymentService: PaymentService,

@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { CommentService } from '../../../services/comment.service';
 import { catchError, of } from 'rxjs';

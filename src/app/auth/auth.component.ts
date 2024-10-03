@@ -91,6 +91,7 @@ export class AuthComponent implements OnInit {
           error: err => {
             this.isSubmitting = false;
             this.errorMessage = 'An error occurred. Please try again.';
+            this.toastr.error('Kullanıcı adı veya şifre hatalı', 'Hata');
           }
         }
       );

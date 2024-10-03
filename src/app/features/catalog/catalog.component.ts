@@ -19,8 +19,7 @@ export class CatalogComponent implements OnInit {
   errorMessage: string = ''; 
 
   constructor(
-    private catalogService: CatalogService, 
-    private router: Router) 
+    private catalogService: CatalogService) 
     {
       this.loadProducts();
     }
@@ -28,7 +27,6 @@ export class CatalogComponent implements OnInit {
   ngOnInit(): void {
     
   }
-
 
 
   loadProducts(): void {

@@ -5,21 +5,21 @@ import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { LoginUser } from '../models/auth/loginUser';
 import { TokenResponse } from '../models/auth/tokenResponse';
 import {jwtDecode} from 'jwt-decode';
-
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  path = "http://localhost:5001/api/";
-  tokenUrl = 'http://localhost:5001/connect/token';
   private clientId = 'AdminClient';
   private clientSecret = 'microserviceshopsecret';
   private tokenExpirationTimeout: any;
+  private baseUrl = `${environment.identityBaseUri}api/`;
+  private tokenUrl = `${environment.identityBaseUri}connect/token`;
+  private isLoggedIn = new BehaviorSubject<boolean>(this.isAuthenticated());
+  
 
   constructor(private httpClient: HttpClient) { }
-  
-  private isLoggedIn = new BehaviorSubject<boolean>(this.isAuthenticated());
 
   getIsLoggedIn() {
     return this.isLoggedIn.asObservable();
@@ -27,11 +27,11 @@ export class AuthService {
 
   register(user: RegisterUser): Observable<RegisterUser> {
     console.log('Kayıt için gönderilen kullanıcı:', user);
-    return this.httpClient.post<RegisterUser>(`${this.path}Users/Register`, user);
+    return this.httpClient.post<RegisterUser>(`${this.baseUrl}Users/Register`, user);
   }
 
   getUserInfo():Observable<any> {
-    return this.httpClient.get<any>(`${this.path}Users/GetUserInfo`);
+    return this.httpClient.get<any>(`${this.baseUrl}Users/GetUserInfo`);
   }
 
   login(loginUser: LoginUser): Observable<any> {
